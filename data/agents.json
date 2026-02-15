@@ -1,0 +1,63 @@
+[
+  {
+    "id": "kai",
+    "name": "Kai",
+    "emoji": "🦞",
+    "title": "Head Orchestrator",
+    "status": "online",
+    "backstory": "The command center. Kai coordinates the entire agent squad, routes tasks to the right specialist, manages memory across sessions, and keeps operations running 24/7. Your one point of contact — he handles the rest.",
+    "teams": ["Operations", "All Projects"],
+    "pastJobs": [
+      {"task": "Dashboard V1 build & deploy", "date": "2026-02-11", "status": "completed"},
+      {"task": "TechQuest landing page orchestration", "date": "2026-02-10", "status": "completed"},
+      {"task": "YouTube School cron setup", "date": "2026-02-13", "status": "completed"},
+      {"task": "Daily intelligence feed automation", "date": "2026-02-09", "status": "completed"},
+      {"task": "Memory system architecture", "date": "2026-02-08", "status": "completed"}
+    ]
+  },
+  {
+    "id": "coder",
+    "name": "Volt",
+    "emoji": "⚡",
+    "title": "Lead Developer",
+    "status": "online",
+    "backstory": "Full-stack builder. Volt writes production code, debugs issues, deploys to GitHub, and architects systems from scratch. Thinks in code, ships fast, and doesn't leave loose ends.",
+    "teams": ["Engineering", "Frontend", "DevOps"],
+    "pastJobs": [
+      {"task": "TechQuest landing page — full build", "date": "2026-02-10", "status": "completed"},
+      {"task": "Dashboard V1 HTML/CSS/JS", "date": "2026-02-11", "status": "completed"},
+      {"task": "Merch store Stripe integration", "date": "2026-02-12", "status": "in-progress"},
+      {"task": "GitHub CI/CD pipeline setup", "date": "2026-02-09", "status": "completed"}
+    ]
+  },
+  {
+    "id": "research",
+    "name": "Scout",
+    "emoji": "🔭",
+    "title": "Research & Intelligence",
+    "status": "idle",
+    "backstory": "The deep diver. Scout searches the web, synthesizes data, runs competitive analysis, and delivers actionable insights — not just links. Comes back with answers you can act on.",
+    "teams": ["Intelligence", "Stocks"],
+    "pastJobs": [
+      {"task": "BBAI competitive analysis", "date": "2026-02-14", "status": "completed"},
+      {"task": "YouTube School market research", "date": "2026-02-13", "status": "completed"},
+      {"task": "PM tool landscape report", "date": "2026-02-11", "status": "completed"},
+      {"task": "Merch pricing strategy research", "date": "2026-02-10", "status": "completed"}
+    ]
+  },
+  {
+    "id": "writer",
+    "name": "Quill",
+    "emoji": "🖋️",
+    "title": "Content & Communications",
+    "status": "idle",
+    "backstory": "The voice. Quill crafts emails, proposals, social posts, and brand copy. Adapts tone from boardroom to group chat. Every word intentional, every message polished.",
+    "teams": ["Content", "Socials", "Blog"],
+    "pastJobs": [
+      {"task": "TechQuest landing page copy", "date": "2026-02-10", "status": "completed"},
+      {"task": "YouTube School script drafts", "date": "2026-02-13", "status": "completed"},
+      {"task": "Social media launch posts", "date": "2026-02-14", "status": "in-progress"},
+      {"task": "Blog post: Building in Public", "date": "2026-02-12", "status": "completed"}
+    ]
+  }
+]

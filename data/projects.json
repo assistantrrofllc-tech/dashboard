@@ -1,0 +1,69 @@
+[
+  {
+    "id": "techquest-landing",
+    "name": "TechQuest Landing Page",
+    "status": "live",
+    "progress": 100,
+    "lead": "Volt",
+    "priority": "high",
+    "tasks": [
+      {"name": "Design & layout", "done": true},
+      {"name": "Hero section + animations", "done": true},
+      {"name": "Agent squad section", "done": true},
+      {"name": "Email capture form", "done": true},
+      {"name": "Deploy to GitHub Pages", "done": true},
+      {"name": "Custom domain setup", "done": false}
+    ],
+    "notes": "Live at assistantrrofllc-tech.github.io. Need to connect custom domain when ready. Built and deployed by AI in under 10 minutes."
+  },
+  {
+    "id": "personal-dashboard",
+    "name": "Personal Dashboard V2",
+    "status": "in-progress",
+    "progress": 30,
+    "lead": "Volt",
+    "priority": "high",
+    "tasks": [
+      {"name": "New layout design (tabs, 3 areas)", "done": true},
+      {"name": "Cron jobs display", "done": true},
+      {"name": "Agent profiles with click-through", "done": true},
+      {"name": "Project detail views", "done": true},
+      {"name": "Mobile responsive polish", "done": false},
+      {"name": "Connect to live cron data", "done": false}
+    ],
+    "notes": "Rebuilding from V1. Dark theme, glassmorphism, TechQuest style. JSON-driven data layer."
+  },
+  {
+    "id": "merch-store",
+    "name": "Merch Store",
+    "status": "planning",
+    "progress": 15,
+    "lead": "Volt",
+    "priority": "medium",
+    "tasks": [
+      {"name": "Product catalog design", "done": true},
+      {"name": "Stripe integration", "done": false},
+      {"name": "Shopping cart UI", "done": false},
+      {"name": "Order confirmation flow", "done": false},
+      {"name": "Inventory management", "done": false}
+    ],
+    "notes": "TechQuest branded merch. Hoodies, hats, stickers. Revenue stream to fund operations."
+  },
+  {
+    "id": "youtube-school",
+    "name": "YouTube School",
+    "status": "in-progress",
+    "progress": 40,
+    "lead": "Kai",
+    "priority": "high",
+    "tasks": [
+      {"name": "Channel strategy & niche research", "done": true},
+      {"name": "Content pipeline setup", "done": true},
+      {"name": "Script templates", "done": true},
+      {"name": "First 5 video scripts", "done": false},
+      {"name": "Thumbnail system", "done": false},
+      {"name": "Upload automation", "done": false}
+    ],
+    "notes": "Educational content channel. Hourly cron monitors trends and generates content ideas. Target: 1 video/week to start."
+  }
+]

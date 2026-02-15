@@ -1,0 +1,79 @@
+[
+  {
+    "id": "heartbeat",
+    "name": "Heartbeat Check",
+    "emoji": "💓",
+    "schedule": "*/30 * * * *",
+    "interval": "Every 30 min",
+    "description": "System health check, memory sync, proactive monitoring",
+    "lastRun": "2026-02-15T14:00:00-05:00",
+    "nextRun": "2026-02-15T14:30:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "youtube-school",
+    "name": "YouTube School Monitor",
+    "emoji": "🎓",
+    "schedule": "0 * * * *",
+    "interval": "Every hour",
+    "description": "Scan trending topics, generate content ideas, update pipeline",
+    "lastRun": "2026-02-15T14:00:00-05:00",
+    "nextRun": "2026-02-15T15:00:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "qmd-index",
+    "name": "QMD 4AM Index",
+    "emoji": "📊",
+    "schedule": "0 4 * * *",
+    "interval": "Daily at 4:00 AM",
+    "description": "Quarterly market data indexing and analysis refresh",
+    "lastRun": "2026-02-15T04:00:00-05:00",
+    "nextRun": "2026-02-16T04:00:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "daily-intel",
+    "name": "Daily Intelligence Brief",
+    "emoji": "🧠",
+    "schedule": "0 7 * * *",
+    "interval": "Daily at 7:00 AM",
+    "description": "Morning briefing: news, stocks, calendar, priorities",
+    "lastRun": "2026-02-15T07:00:00-05:00",
+    "nextRun": "2026-02-16T07:00:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "git-backup",
+    "name": "Git Auto-Push",
+    "emoji": "📦",
+    "schedule": "0 */6 * * *",
+    "interval": "Every 6 hours",
+    "description": "Auto-commit and push workspace changes to GitHub",
+    "lastRun": "2026-02-15T12:00:00-05:00",
+    "nextRun": "2026-02-15T18:00:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "stock-scan",
+    "name": "BBAI Stock Scanner",
+    "emoji": "📈",
+    "schedule": "0 9,12,16 * * 1-5",
+    "interval": "Market hours (9AM, 12PM, 4PM)",
+    "description": "Price alerts, volume analysis, news sentiment for BBAI",
+    "lastRun": "2026-02-14T16:00:00-05:00",
+    "nextRun": "2026-02-17T09:00:00-05:00",
+    "status": "active"
+  },
+  {
+    "id": "memory-cleanup",
+    "name": "Memory Maintenance",
+    "emoji": "🧹",
+    "schedule": "0 3 * * 0",
+    "interval": "Weekly (Sun 3AM)",
+    "description": "Archive old daily notes, update MEMORY.md, prune stale data",
+    "lastRun": "2026-02-09T03:00:00-05:00",
+    "nextRun": "2026-02-16T03:00:00-05:00",
+    "status": "active"
+  }
+]
