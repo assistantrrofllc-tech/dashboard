@@ -1,0 +1,106 @@
+{
+  "transactions": [
+    {
+      "id": "fin-001",
+      "date": "2026-02-01",
+      "type": "income",
+      "amount": 4200.00,
+      "category": "Salary",
+      "description": "RROF bi-weekly paycheck"
+    },
+    {
+      "id": "fin-002",
+      "date": "2026-02-03",
+      "type": "expense",
+      "amount": 1450.00,
+      "category": "Rent",
+      "description": "Monthly rent"
+    },
+    {
+      "id": "fin-003",
+      "date": "2026-02-05",
+      "type": "expense",
+      "amount": 85.00,
+      "category": "Subscriptions",
+      "description": "Spectrum internet + mobile"
+    },
+    {
+      "id": "fin-004",
+      "date": "2026-02-07",
+      "type": "expense",
+      "amount": 62.50,
+      "category": "Health",
+      "description": "Supplement restock — Amazon"
+    },
+    {
+      "id": "fin-005",
+      "date": "2026-02-10",
+      "type": "income",
+      "amount": 145.00,
+      "category": "Trading",
+      "description": "AMD call profit"
+    },
+    {
+      "id": "fin-006",
+      "date": "2026-02-12",
+      "type": "expense",
+      "amount": 48.00,
+      "category": "Gas",
+      "description": "Gas — job sites"
+    },
+    {
+      "id": "fin-007",
+      "date": "2026-02-14",
+      "type": "income",
+      "amount": 4200.00,
+      "category": "Salary",
+      "description": "RROF bi-weekly paycheck"
+    },
+    {
+      "id": "fin-008",
+      "date": "2026-02-14",
+      "type": "expense",
+      "amount": 120.00,
+      "category": "Dining",
+      "description": "Valentine's dinner"
+    }
+  ],
+  "cefPortfolio": [
+    {
+      "ticker": "JQC",
+      "shares": 125,
+      "avgCost": 6.82,
+      "currentPrice": 7.15,
+      "dripActive": false,
+      "status": "Runoff — 125 benchmark hit",
+      "dividendYield": 9.8
+    },
+    {
+      "ticker": "PDI",
+      "shares": 47,
+      "avgCost": 18.45,
+      "currentPrice": 19.20,
+      "dripActive": true,
+      "status": "DRIP active — 78 to go",
+      "dividendYield": 13.2
+    },
+    {
+      "ticker": "GOF",
+      "shares": 31,
+      "avgCost": 11.30,
+      "currentPrice": 11.85,
+      "dripActive": true,
+      "status": "DRIP active — 94 to go",
+      "dividendYield": 14.1
+    },
+    {
+      "ticker": "UTF",
+      "shares": 22,
+      "avgCost": 22.10,
+      "currentPrice": 23.40,
+      "dripActive": true,
+      "status": "DRIP active — 103 to go",
+      "dividendYield": 7.5
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[
+  {"id":"e1","title":"Team Standup","date":"2026-02-16","time":"09:00","category":"work","description":"Daily sync with the team"},
+  {"id":"e2","title":"Gym Session","date":"2026-02-17","time":"06:30","category":"health","description":"Leg day"},
+  {"id":"e3","title":"TechQuest Sprint Planning","date":"2026-02-18","time":"14:00","category":"techquest","description":"Plan Phase 2 features"},
+  {"id":"e4","title":"Date Night","date":"2026-02-20","time":"19:00","category":"personal","description":"Dinner reservations"},
+  {"id":"e5","title":"Dentist Appointment","date":"2026-02-22","time":"10:30","category":"health","description":"Regular checkup"},
+  {"id":"e6","title":"RROF Client Meeting","date":"2026-02-19","time":"11:00","category":"work","description":"Roofing estimate review"},
+  {"id":"e7","title":"Netflix Renewal","date":"2026-02-21","time":"00:00","category":"personal","description":"$15.49/mo subscription renewal"},
+  {"id":"e8","title":"Push TechQuest Update","date":"2026-02-23","time":"16:00","category":"techquest","description":"Deploy landing page v2"}
+]

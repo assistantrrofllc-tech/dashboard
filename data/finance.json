@@ -1,0 +1,20 @@
+{
+  "transactions": [
+    {"id":"f1","date":"2026-02-01","type":"income","amount":4200,"category":"work","description":"RROF Roofing - January payroll"},
+    {"id":"f2","date":"2026-02-01","type":"expense","amount":1450,"category":"housing","description":"Rent"},
+    {"id":"f3","date":"2026-02-03","type":"expense","amount":85,"category":"utilities","description":"Electric bill"},
+    {"id":"f4","date":"2026-02-05","type":"expense","amount":320,"category":"food","description":"Groceries"},
+    {"id":"f5","date":"2026-02-07","type":"income","amount":750,"category":"freelance","description":"TechQuest consulting gig"},
+    {"id":"f6","date":"2026-02-08","type":"expense","amount":15.49,"category":"subscriptions","description":"Netflix"},
+    {"id":"f7","date":"2026-02-10","type":"expense","amount":45,"category":"health","description":"Gym membership"},
+    {"id":"f8","date":"2026-02-10","type":"expense","amount":60,"category":"transportation","description":"Gas"},
+    {"id":"f9","date":"2026-02-12","type":"income","amount":125,"category":"dividends","description":"CEF quarterly dividend"},
+    {"id":"f10","date":"2026-02-14","type":"expense","amount":95,"category":"personal","description":"Valentine's dinner"}
+  ],
+  "cefPortfolio": [
+    {"ticker":"PDI","name":"PIMCO Dynamic Income","shares":50,"avgCost":18.25,"currentPrice":19.10,"divYield":13.2},
+    {"ticker":"GOF","name":"Guggenheim Strategic Opp","shares":40,"avgCost":14.50,"currentPrice":15.20,"divYield":14.8},
+    {"ticker":"PTY","name":"PIMCO Corporate & Income","shares":30,"avgCost":13.75,"currentPrice":14.30,"divYield":10.5},
+    {"ticker":"UTG","name":"Reaves Utility Income","shares":25,"avgCost":29.80,"currentPrice":31.50,"divYield":7.8}
+  ]
+}

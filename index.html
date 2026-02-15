@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rob's Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#0d0d14;--card:#111118;
+  --cyan:#00c6ff;--green:#00e676;--teal:#00d4aa;
+  --glow:rgba(0,198,255,.25);--glow-green:rgba(0,230,118,.2);
+  --text:#e8e8f0;--muted:#8888a0;--accent:#00e676;
+  --glass:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);
+  --gradient:linear-gradient(135deg,var(--cyan),var(--green));
+  --cat-work:#ff6b6b;--cat-personal:#ffd93d;--cat-techquest:#00c6ff;--cat-health:#00e676;
+  --pri-high:#ff4757;--pri-medium:#ffa502;--pri-low:#2ed573;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;min-height:100vh}
+
+/* BG Animation */
+.bg-anim{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.bg-anim::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);top:-100px;right:-150px;animation:drift 18s ease-in-out infinite alternate}
+.bg-anim::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,var(--glow-green),transparent 70%);bottom:-50px;left:-100px;animation:drift2 22s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-80px,120px) scale(1.2)}}
+@keyframes drift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,-80px) scale(1.15)}}
+
+/* Layout */
+.app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+header h1{font-size:1.8rem;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-date{color:var(--muted);font-size:.9rem}
+
+/* Nav */
+nav{display:flex;gap:4px;background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:4px;backdrop-filter:blur(12px);flex-wrap:wrap}
+nav button{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.85rem;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap}
+nav button:hover{color:var(--text)}
+nav button.active{background:rgba(0,198,255,.15);color:var(--cyan)}
+
+/* Glass Card */
+.glass{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:24px;backdrop-filter:blur(12px);transition:all .3s}
+.glass:hover{border-color:rgba(0,198,255,.12)}
+.glass h2{font-size:1.2rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.glass h2 .icon{font-size:1.3rem}
+
+/* Sections */
+.section{display:none}
+.section.active{display:block}
+
+/* Dashboard Grid */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dash-grid .full{grid-column:1/-1}
+
+/* Calendar */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-header h3{font-size:1.1rem;font-weight:600}
+.cal-nav{display:flex;gap:8px}
+.cal-nav button{background:var(--glass);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cal-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day-header{text-align:center;font-size:.7rem;color:var(--muted);padding:8px 0;font-weight:600;text-transform:uppercase}
+.cal-day{min-height:80px;padding:4px;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:all .2s;position:relative}
+.cal-day:hover{border-color:var(--border);background:rgba(255,255,255,.02)}
+.cal-day.today{border-color:var(--cyan);background:rgba(0,198,255,.05)}
+.cal-day.other-month{opacity:.3}
+.cal-day .day-num{font-size:.75rem;font-weight:600;margin-bottom:2px}
+.cal-event{font-size:.6rem;padding:2px 4px;border-radius:4px;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.cal-event.work{background:rgba(255,107,107,.2);color:var(--cat-work)}
+.cal-event.personal{background:rgba(255,217,61,.2);color:var(--cat-personal)}
+.cal-event.techquest{background:rgba(0,198,255,.2);color:var(--cat-techquest)}
+.cal-event.health{background:rgba(0,230,118,.2);color:var(--cat-health)}
+
+/* Tasks */
+.task-filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.task-filters button{background:var(--glass);border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:.75rem;padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .2s}
+.task-filters button:hover,.task-filters button.active{border-color:var(--cyan);color:var(--cyan)}
+.task-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:6px;background:rgba(255,255,255,.02);border:1px solid var(--border);transition:all .2s}
+.task-item:hover{border-color:rgba(0,198,255,.15)}
+.task-item.completed{opacity:.4}
+.task-item.completed .task-title{text-decoration:line-through}
+.task-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:.6rem}
+.task-check:hover{border-color:var(--cyan)}
+.task-check.checked{background:var(--green);border-color:var(--green);color:#000}
+.task-title{flex:1;font-size:.85rem}
+.task-meta{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.badge{font-size:.65rem;padding:2px 6px;border-radius:4px;font-weight:600;text-transform:uppercase}
+.badge.high{background:rgba(255,71,87,.2);color:var(--pri-high)}
+.badge.medium{background:rgba(255,165,2,.2);color:var(--pri-medium)}
+.badge.low{background:rgba(46,213,115,.2);color:var(--pri-low)}
+.badge.cat-work{background:rgba(255,107,107,.15);color:var(--cat-work)}
+.badge.cat-personal{background:rgba(255,217,61,.15);color:var(--cat-personal)}
+.badge.cat-techquest{background:rgba(0,198,255,.15);color:var(--cat-techquest)}
+.badge.cat-health{background:rgba(0,230,118,.15);color:var(--cat-health)}
+.task-due{font-size:.7rem;color:var(--muted)}
+.task-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:4px;transition:color .2s}
+.task-delete:hover{color:var(--pri-high)}
+
+/* Reminders */
+.reminder-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;margin-bottom:8px;background:rgba(255,255,255,.02);border:1px solid var(--border)}
+.reminder-icon{font-size:1.2rem;flex-shrink:0}
+.reminder-info{flex:1}
+.reminder-title{font-size:.85rem;font-weight:500}
+.reminder-date{font-size:.7rem;color:var(--muted)}
+.reminder-urgent{border-color:rgba(255,71,87,.3);background:rgba(255,71,87,.05)}
+
+/* Finance */
+.fin-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.fin-stat{text-align:center;padding:16px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px}
+.fin-stat .val{font-size:1.4rem;font-weight:700}
+.fin-stat .val.income{color:var(--green)}
+.fin-stat .val.expense{color:var(--pri-high)}
+.fin-stat .val.net{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fin-stat .label{font-size:.7rem;color:var(--muted);margin-top:4px;text-transform:uppercase}
+.fin-table{width:100%;border-collapse:collapse}
+.fin-table th{text-align:left;font-size:.7rem;color:var(--muted);padding:8px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.fin-table td{padding:8px;font-size:.8rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.fin-table .amount.income{color:var(--green)}
+.fin-table .amount.expense{color:var(--pri-high)}
+
+/* CEF */
+.cef-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cef-item{padding:16px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px}
+.cef-ticker{font-weight:700;font-size:1rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cef-name{font-size:.7rem;color:var(--muted);margin-bottom:8px}
+.cef-detail{font-size:.75rem;color:var(--text);margin-bottom:2px}
+.cef-yield{color:var(--green);font-weight:600}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:#14141e;border:1px solid var(--border);border-radius:16px;padding:28px;max-width:420px;width:90%;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:1.1rem;margin-bottom:16px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:inherit;font-size:.85rem;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--cyan)}
+.form-group select option{background:#14141e}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.btn{padding:8px 20px;border-radius:8px;border:none;font-family:inherit;font-size:.85rem;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--gradient);color:#000;font-weight:600}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--text)}
+
+/* Add buttons */
+.add-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--gradient);border:none;color:#000;font-size:1.5rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px var(--glow);transition:all .2s;z-index:50;display:flex;align-items:center;justify-content:center}
+.add-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px var(--glow)}
+
+/* Bar chart */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding:12px 0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:height .3s;min-height:2px}
+.bar-label{font-size:.6rem;color:var(--muted)}
+.bar-val{font-size:.6rem;color:var(--text)}
+
+/* Responsive */
+@media(max-width:768px){
+  .dash-grid{grid-template-columns:1fr}
+  header h1{font-size:1.4rem}
+  .cal-day{min-height:60px}
+  .cal-event{font-size:.55rem}
+  .app{padding:12px}
+}
+@media(max-width:480px){
+  nav button{font-size:.75rem;padding:6px 10px}
+  .glass{padding:16px}
+  .cal-day{min-height:48px}
+  .cal-day .day-num{font-size:.65rem}
+}
+</style>
+</head>
+<body>
+<div class="bg-anim"></div>
+<div class="app">
+  <header>
+    <div>
+      <h1>⚡ Dashboard</h1>
+      <div class="header-date" id="headerDate"></div>
+    </div>
+    <nav>
+      <button class="active" data-section="overview">Overview</button>
+      <button data-section="calendar">Calendar</button>
+      <button data-section="tasks">Tasks</button>
+      <button data-section="finance">Finance</button>
+    </nav>
+  </header>
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="sec-overview">
+    <div class="dash-grid">
+      <div class="glass">
+        <h2><span class="icon">📅</span> Upcoming</h2>
+        <div id="reminders"></div>
+      </div>
+      <div class="glass">
+        <h2><span class="icon">✅</span> Tasks Due Soon</h2>
+        <div id="tasksDueSoon"></div>
+      </div>
+      <div class="glass full">
+        <h2><span class="icon">💰</span> Finance Snapshot</h2>
+        <div class="fin-summary" id="finSnapshot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="section" id="sec-calendar">
+    <div class="glass">
+      <div class="cal-header">
+        <h3 id="calTitle"></h3>
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)">‹</button>
+          <button onclick="changeMonth(0)">Today</button>
+          <button onclick="changeMonth(1)">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+  </div>
+
+  <!-- TASKS -->
+  <div class="section" id="sec-tasks">
+    <div class="glass">
+      <h2><span class="icon">📋</span> Tasks</h2>
+      <div class="task-filters" id="taskFilters">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="work">Work</button>
+        <button data-filter="personal">Personal</button>
+        <button data-filter="techquest">TechQuest</button>
+        <button data-filter="health">Health</button>
+      </div>
+      <div id="taskList"></div>
+    </div>
+  </div>
+
+  <!-- FINANCE -->
+  <div class="section" id="sec-finance">
+    <div class="dash-grid">
+      <div class="glass full">
+        <h2><span class="icon">💰</span> February Summary</h2>
+        <div class="fin-summary" id="finSummary"></div>
+        <div style="margin-top:16px">
+          <h3 style="font-size:.9rem;margin-bottom:12px;color:var(--muted)">Spending by Category</h3>
+          <div class="bar-chart" id="spendingChart"></div>
+        </div>
+      </div>
+      <div class="glass">
+        <h2><span class="icon">📊</span> Transactions</h2>
+        <table class="fin-table">
+          <thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead>
+          <tbody id="finTable"></tbody>
+        </table>
+      </div>
+      <div class="glass">
+        <h2><span class="icon">📈</span> CEF Portfolio</h2>
+        <div class="cef-card" id="cefCard"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="add-btn" id="addBtn" title="Add new">+</button>
+</div>
+
+<!-- Event Modal -->
+<div class="modal-overlay" id="eventModal">
+  <div class="modal">
+    <h3>Add Event</h3>
+    <div class="form-group"><label>Title</label><input id="evTitle" placeholder="Event name"></div>
+    <div class="form-group"><label>Date</label><input type="date" id="evDate"></div>
+    <div class="form-group"><label>Time</label><input type="time" id="evTime"></div>
+    <div class="form-group"><label>Category</label><select id="evCat"><option value="work">Work</option><option value="personal">Personal</option><option value="techquest">TechQuest</option><option value="health">Health</option></select></div>
+    <div class="form-group"><label>Description</label><textarea id="evDesc" rows="2" placeholder="Optional"></textarea></div>
+    <div class="modal-actions"><button class="btn btn-primary" onclick="saveEvent()">Save</button><button class="btn btn-ghost" onclick="closeModal('eventModal')">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <h3>Add Task</h3>
+    <div class="form-group"><label>Title</label><input id="tkTitle" placeholder="Task name"></div>
+    <div class="form-group"><label>Category</label><select id="tkCat"><option value="work">Work</option><option value="personal">Personal</option><option value="techquest">TechQuest</option><option value="health">Health</option></select></div>
+    <div class="form-group"><label>Priority</label><select id="tkPri"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div>
+    <div class="form-group"><label>Due Date</label><input type="date" id="tkDue"></div>
+    <div class="modal-actions"><button class="btn btn-primary" onclick="saveTask()">Save</button><button class="btn btn-ghost" onclick="closeModal('taskModal')">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Finance Modal -->
+<div class="modal-overlay" id="finModal">
+  <div class="modal">
+    <h3>Add Transaction</h3>
+    <div class="form-group"><label>Type</label><select id="fnType"><option value="income">Income</option><option value="expense">Expense</option></select></div>
+    <div class="form-group"><label>Amount</label><input type="number" id="fnAmt" step="0.01" placeholder="0.00"></div>
+    <div class="form-group"><label>Category</label><input id="fnCatInput" placeholder="e.g. food, utilities"></div>
+    <div class="form-group"><label>Description</label><input id="fnDesc" placeholder="What for?"></div>
+    <div class="form-group"><label>Date</label><input type="date" id="fnDate"></div>
+    <div class="modal-actions"><button class="btn btn-primary" onclick="saveTransaction()">Save</button><button class="btn btn-ghost" onclick="closeModal('finModal')">Cancel</button></div>
+  </div>
+</div>
+
+<script>
+// === DATA ===
+const STORE_EVENTS = 'dash_events';
+const STORE_TASKS = 'dash_tasks';
+const STORE_FINANCE = 'dash_finance';
+
+let events = JSON.parse(localStorage.getItem(STORE_EVENTS)) || [];
+let tasks = JSON.parse(localStorage.getItem(STORE_TASKS)) || [];
+let finance = JSON.parse(localStorage.getItem(STORE_FINANCE)) || null;
+
+// Load sample data on first visit
+async function loadSampleData() {
+  if (!events.length) {
+    try { const r = await fetch('data/events.json'); events = await r.json(); save('events'); } catch(e) { console.log('No sample events'); }
+  }
+  if (!tasks.length) {
+    try { const r = await fetch('data/tasks.json'); tasks = await r.json(); save('tasks'); } catch(e) { console.log('No sample tasks'); }
+  }
+  if (!finance) {
+    try { const r = await fetch('data/finance.json'); finance = await r.json(); save('finance'); } catch(e) { finance = { transactions: [], cefPortfolio: [] }; }
+  }
+  renderAll();
+}
+
+function save(type) {
+  if (type === 'events') localStorage.setItem(STORE_EVENTS, JSON.stringify(events));
+  if (type === 'tasks') localStorage.setItem(STORE_TASKS, JSON.stringify(tasks));
+  if (type === 'finance') localStorage.setItem(STORE_FINANCE, JSON.stringify(finance));
+}
+
+function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+// === NAV ===
+let currentSection = 'overview';
+document.querySelectorAll('nav button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentSection = b.dataset.section;
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('sec-' + currentSection).classList.add('active');
+  });
+});
+
+// === HEADER DATE ===
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const now = new Date();
+document.getElementById('headerDate').textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+// === CALENDAR ===
+let calYear = now.getFullYear(), calMonth = now.getMonth();
+
+function changeMonth(dir) {
+  if (dir === 0) { calYear = now.getFullYear(); calMonth = now.getMonth(); }
+  else { calMonth += dir; if (calMonth < 0) { calMonth = 11; calYear--; } if (calMonth > 11) { calMonth = 0; calYear++; } }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  document.getElementById('calTitle').textContent = `${months[calMonth]} ${calYear}`;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    grid.innerHTML += `<div class="cal-day-header">${d}</div>`;
+  });
+  const first = new Date(calYear, calMonth, 1);
+  const lastDay = new Date(calYear, calMonth + 1, 0).getDate();
+  const startDay = first.getDay();
+  const prevLast = new Date(calYear, calMonth, 0).getDate();
+
+  for (let i = startDay - 1; i >= 0; i--) {
+    const d = prevLast - i;
+    grid.innerHTML += `<div class="cal-day other-month"><div class="day-num">${d}</div></div>`;
+  }
+  for (let d = 1; d <= lastDay; d++) {
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = dateStr === `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    const dayEvents = events.filter(e => e.date === dateStr);
+    let evHtml = dayEvents.slice(0,3).map(e => `<div class="cal-event ${e.category}" title="${e.title}">${e.time ? e.time.slice(0,5)+' ' : ''}${e.title}</div>`).join('');
+    if (dayEvents.length > 3) evHtml += `<div class="cal-event" style="color:var(--muted)">+${dayEvents.length-3} more</div>`;
+    grid.innerHTML += `<div class="cal-day${isToday?' today':''}" onclick="openEventModal('${dateStr}')"><div class="day-num">${d}</div>${evHtml}</div>`;
+  }
+  const totalCells = startDay + lastDay;
+  const remaining = (7 - totalCells % 7) % 7;
+  for (let i = 1; i <= remaining; i++) {
+    grid.innerHTML += `<div class="cal-day other-month"><div class="day-num">${i}</div></div>`;
+  }
+}
+
+// === TASKS ===
+let taskFilter = 'all';
+document.getElementById('taskFilters').addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON') {
+    document.querySelectorAll('#taskFilters button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    taskFilter = e.target.dataset.filter;
+    renderTasks();
+  }
+});
+
+function renderTasks() {
+  const list = document.getElementById('taskList');
+  const filtered = taskFilter === 'all' ? tasks : tasks.filter(t => t.category === taskFilter);
+  const sorted = [...filtered].sort((a,b) => {
+    if (a.completed !== b.completed) return a.completed ? 1 : -1;
+    const pri = {high:0,medium:1,low:2};
+    return (pri[a.priority]||1) - (pri[b.priority]||1);
+  });
+  list.innerHTML = sorted.map(t => `
+    <div class="task-item${t.completed?' completed':''}">
+      <div class="task-check${t.completed?' checked':''}" onclick="toggleTask('${t.id}')">${t.completed?'✓':''}</div>
+      <div class="task-title">${t.title}</div>
+      <div class="task-meta">
+        <span class="badge cat-${t.category}">${t.category}</span>
+        <span class="badge ${t.priority}">${t.priority}</span>
+        ${t.dueDate ? `<span class="task-due">${formatDate(t.dueDate)}</span>` : ''}
+      </div>
+      <button class="task-delete" onclick="deleteTask('${t.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function toggleTask(id) {
+  const t = tasks.find(x => x.id === id);
+  if (t) { t.completed = !t.completed; save('tasks'); renderTasks(); renderOverview(); }
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(x => x.id !== id);
+  save('tasks');
+  renderTasks();
+  renderOverview();
+}
+
+// === FINANCE ===
+function renderFinance() {
+  if (!finance) return;
+  const txns = finance.transactions || [];
+  const income = txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const net = income - expense;
+
+  // Summary
+  const sumHtml = `
+    <div class="fin-stat"><div class="val income">$${income.toLocaleString('en',{minimumFractionDigits:2})}</div><div class="label">Income</div></div>
+    <div class="fin-stat"><div class="val expense">$${expense.toLocaleString('en',{minimumFractionDigits:2})}</div><div class="label">Expenses</div></div>
+    <div class="fin-stat"><div class="val net">$${net.toLocaleString('en',{minimumFractionDigits:2})}</div><div class="label">Net</div></div>
+  `;
+  document.getElementById('finSummary').innerHTML = sumHtml;
+  document.getElementById('finSnapshot').innerHTML = sumHtml;
+
+  // Table
+  const tbody = document.getElementById('finTable');
+  tbody.innerHTML = [...txns].reverse().map(t => `
+    <tr>
+      <td>${formatDate(t.date)}</td>
+      <td>${t.description}</td>
+      <td class="amount ${t.type}">${t.type==='income'?'+':'-'}$${t.amount.toFixed(2)}</td>
+    </tr>
+  `).join('');
+
+  // Spending chart
+  const cats = {};
+  txns.filter(t=>t.type==='expense').forEach(t => { cats[t.category] = (cats[t.category]||0) + t.amount; });
+  const maxVal = Math.max(...Object.values(cats), 1);
+  const colors = ['#ff6b6b','#ffd93d','#00c6ff','#00e676','#ff9ff3','#ffa502','#2ed573','#a55eea'];
+  document.getElementById('spendingChart').innerHTML = Object.entries(cats).map(([cat,val],i) => `
+    <div class="bar-col">
+      <div class="bar-val">$${val.toFixed(0)}</div>
+      <div class="bar" style="height:${(val/maxVal)*100}%;background:${colors[i%colors.length]}"></div>
+      <div class="bar-label">${cat}</div>
+    </div>
+  `).join('');
+
+  // CEF
+  const cef = finance.cefPortfolio || [];
+  const totalVal = cef.reduce((s,c) => s + c.shares * c.currentPrice, 0);
+  document.getElementById('cefCard').innerHTML = cef.map(c => {
+    const val = c.shares * c.currentPrice;
+    const gain = ((c.currentPrice - c.avgCost) / c.avgCost * 100).toFixed(1);
+    return `<div class="cef-item">
+      <div class="cef-ticker">${c.ticker}</div>
+      <div class="cef-name">${c.name}</div>
+      <div class="cef-detail">${c.shares} shares @ $${c.currentPrice.toFixed(2)}</div>
+      <div class="cef-detail">Value: $${val.toFixed(2)}</div>
+      <div class="cef-detail">Gain: <span style="color:${parseFloat(gain)>=0?'var(--green)':'var(--pri-high)'}">${gain}%</span></div>
+      <div class="cef-detail">Yield: <span class="cef-yield">${c.divYield}%</span></div>
+    </div>`;
+  }).join('') + `<div class="cef-item"><div class="cef-ticker">TOTAL</div><div class="cef-name">Portfolio Value</div><div class="cef-detail" style="font-size:1.1rem;font-weight:700;margin-top:8px">$${totalVal.toFixed(2)}</div></div>`;
+}
+
+// === OVERVIEW / REMINDERS ===
+function renderOverview() {
+  const today = new Date();
+  const week = new Date(today.getTime() + 7 * 86400000);
+  const todayStr = toDateStr(today);
+  const weekStr = toDateStr(week);
+
+  // Reminders
+  const upcoming = events.filter(e => e.date >= todayStr && e.date <= weekStr).sort((a,b) => a.date.localeCompare(b.date));
+  document.getElementById('reminders').innerHTML = upcoming.length ? upcoming.map(e => {
+    const daysAway = Math.ceil((new Date(e.date+'T00:00') - today) / 86400000);
+    const urgent = daysAway <= 1;
+    const icons = {work:'💼',personal:'🏠',techquest:'🚀',health:'🏃'};
+    return `<div class="reminder-item${urgent?' reminder-urgent':''}">
+      <div class="reminder-icon">${icons[e.category]||'📌'}</div>
+      <div class="reminder-info">
+        <div class="reminder-title">${e.title}</div>
+        <div class="reminder-date">${formatDate(e.date)}${e.time?' at '+e.time:''} · ${daysAway===0?'Today':daysAway===1?'Tomorrow':daysAway+' days'}</div>
+      </div>
+    </div>`;
+  }).join('') : '<div style="color:var(--muted);font-size:.85rem">No upcoming events this week 🎉</div>';
+
+  // Tasks due soon
+  const dueSoon = tasks.filter(t => !t.completed && t.dueDate && t.dueDate >= todayStr && t.dueDate <= weekStr).sort((a,b) => a.dueDate.localeCompare(b.dueDate));
+  document.getElementById('tasksDueSoon').innerHTML = dueSoon.length ? dueSoon.map(t => `
+    <div class="task-item">
+      <div class="task-check" onclick="toggleTask('${t.id}')"></div>
+      <div class="task-title">${t.title}</div>
+      <div class="task-meta">
+        <span class="badge ${t.priority}">${t.priority}</span>
+        <span class="task-due">${formatDate(t.dueDate)}</span>
+      </div>
+    </div>
+  `).join('') : '<div style="color:var(--muted);font-size:.85rem">All caught up! ✨</div>';
+}
+
+// === MODALS ===
+function openEventModal(date) {
+  document.getElementById('evDate').value = date || '';
+  document.getElementById('evTitle').value = '';
+  document.getElementById('evTime').value = '';
+  document.getElementById('evDesc').value = '';
+  document.getElementById('eventModal').classList.add('show');
+}
+
+function openTaskModal() {
+  document.getElementById('tkTitle').value = '';
+  document.getElementById('tkDue').value = '';
+  document.getElementById('taskModal').classList.add('show');
+}
+
+function openFinModal() {
+  document.getElementById('fnAmt').value = '';
+  document.getElementById('fnDesc').value = '';
+  document.getElementById('fnCatInput').value = '';
+  document.getElementById('fnDate').value = toDateStr(new Date());
+  document.getElementById('finModal').classList.add('show');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function saveEvent() {
+  const title = document.getElementById('evTitle').value.trim();
+  if (!title) return;
+  events.push({
+    id: uid(), title,
+    date: document.getElementById('evDate').value,
+    time: document.getElementById('evTime').value,
+    category: document.getElementById('evCat').value,
+    description: document.getElementById('evDesc').value
+  });
+  save('events'); closeModal('eventModal'); renderAll();
+}
+
+function saveTask() {
+  const title = document.getElementById('tkTitle').value.trim();
+  if (!title) return;
+  tasks.push({
+    id: uid(), title,
+    category: document.getElementById('tkCat').value,
+    priority: document.getElementById('tkPri').value,
+    dueDate: document.getElementById('tkDue').value,
+    completed: false
+  });
+  save('tasks'); closeModal('taskModal'); renderAll();
+}
+
+function saveTransaction() {
+  const amt = parseFloat(document.getElementById('fnAmt').value);
+  if (!amt) return;
+  finance.transactions.push({
+    id: uid(),
+    date: document.getElementById('fnDate').value,
+    type: document.getElementById('fnType').value,
+    amount: amt,
+    category: document.getElementById('fnCatInput').value.trim().toLowerCase() || 'other',
+    description: document.getElementById('fnDesc').value.trim()
+  });
+  save('finance'); closeModal('finModal'); renderAll();
+}
+
+// FAB
+document.getElementById('addBtn').addEventListener('click', () => {
+  if (currentSection === 'calendar') openEventModal(toDateStr(new Date()));
+  else if (currentSection === 'tasks') openTaskModal();
+  else if (currentSection === 'finance') openFinModal();
+  else {
+    // Show a quick picker
+    const choice = prompt('Add: (1) Event, (2) Task, (3) Transaction');
+    if (choice === '1') openEventModal(toDateStr(new Date()));
+    else if (choice === '2') openTaskModal();
+    else if (choice === '3') openFinModal();
+  }
+});
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
+});
+
+// === HELPERS ===
+function toDateStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function formatDate(s) { const d = new Date(s+'T00:00'); return `${months[d.getMonth()].slice(0,3)} ${d.getDate()}`; }
+
+function renderAll() { renderCalendar(); renderTasks(); renderFinance(); renderOverview(); }
+
+// === INIT ===
+loadSampleData();
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "task-001",
+    "title": "Submit Carlisle warranty paperwork",
+    "category": "work",
+    "priority": "high",
+    "dueDate": "2026-02-17",
+    "completed": false,
+    "createdAt": "2026-02-14"
+  },
+  {
+    "id": "task-002",
+    "title": "Upload CompanyCam photos — Clearwater job",
+    "category": "work",
+    "priority": "medium",
+    "dueDate": "2026-02-19",
+    "completed": false,
+    "createdAt": "2026-02-14"
+  },
+  {
+    "id": "task-003",
+    "title": "Research land listings — 1+ acre w/ RV hookups",
+    "category": "personal",
+    "priority": "medium",
+    "dueDate": "2026-02-22",
+    "completed": false,
+    "createdAt": "2026-02-13"
+  },
+  {
+    "id": "task-004",
+    "title": "Design RROF project management module",
+    "category": "techquest",
+    "priority": "high",
+    "dueDate": "2026-02-25",
+    "completed": false,
+    "createdAt": "2026-02-15"
+  },
+  {
+    "id": "task-005",
+    "title": "Refill creatine & electrolyte powder",
+    "category": "health",
+    "priority": "low",
+    "dueDate": "2026-02-20",
+    "completed": false,
+    "createdAt": "2026-02-12"
+  },
+  {
+    "id": "task-006",
+    "title": "Review JQC dividend — 125 share benchmark hit",
+    "category": "personal",
+    "priority": "high",
+    "dueDate": "2026-02-16",
+    "completed": false,
+    "createdAt": "2026-02-10"
+  },
+  {
+    "id": "task-007",
+    "title": "Push dashboard v1 to GitHub Pages",
+    "category": "techquest",
+    "priority": "high",
+    "dueDate": "2026-02-15",
+    "completed": false,
+    "createdAt": "2026-02-15"
+  }
+]
