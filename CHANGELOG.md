@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.1.0] - 2026-02-15
+
+### Finance Tab — Banking-Style Transaction View
+
+**Overview Section:**
+- Net balance, money in, money out summary cards
+- Deposit and transaction counts
+
+**Transaction List:**
+- Bank statement-style list sorted by date (newest first)
+- Category icons and color-coded badges per transaction
+- Green for income, red for expenses
+- Receipt indicator dot on transactions with receipts
+- Filterable by: All/Income/Expense + category dropdown
+
+**Transaction Detail (click any row):**
+- Full details: vendor, address, card used
+- Item breakdown with subtotal + tax
+- Receipt image viewer with click-to-zoom fullscreen
+- Price tracking indicator if item is tracked
+
+**Price Tracking Section:**
+- Shows tracked items from `data/price-tracking.json`
+- Price history with vendor and date
+- Badge indicators for price changes (up/down/baseline)
+- Lowest price reference
+
+**Design:**
+- Matches existing dark glassmorphism theme
+- Mobile-responsive (finance overview stacks on mobile)
+- Smooth overlay transitions, ESC to close
+- Receipt fullscreen viewer with backdrop
+
+---
+
 ## [2.0.0] - 2026-02-15
 
 ### Complete Rebuild — Dashboard V2

@@ -173,11 +173,90 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .placeholder p{font-size:.85rem;max-width:400px}
 
 /* Mobile */
+/* Finance Page */
+.finance-overview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px}
+.finance-stat{padding:20px;text-align:center}
+.finance-stat .stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.finance-stat .stat-value{font-size:1.6rem;font-weight:700}
+.finance-stat .stat-value.positive{color:var(--green)}
+.finance-stat .stat-value.negative{color:#ff5252}
+.finance-stat .stat-sub{font-size:.72rem;color:var(--muted);margin-top:4px}
+
+.finance-chart{display:flex;align-items:flex-end;justify-content:center;gap:20px;height:100px;padding:16px 0}
+.chart-bar-group{display:flex;flex-direction:column;align-items:center;gap:6px}
+.chart-bar{width:48px;border-radius:6px 6px 0 0;min-height:4px;transition:height .6s ease}
+.chart-bar.income{background:linear-gradient(to top,rgba(0,230,118,.6),var(--green))}
+.chart-bar.expense{background:linear-gradient(to top,rgba(255,82,82,.6),#ff5252)}
+.chart-bar-label{font-size:.68rem;color:var(--muted)}
+
+.finance-filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.finance-filter{background:var(--glass);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:.75rem;cursor:pointer;transition:all .2s}
+.finance-filter:hover,.finance-filter.active{border-color:rgba(0,198,255,.3);color:var(--cyan);background:rgba(0,198,255,.06)}
+.finance-filter select,.finance-filter input{background:transparent;border:none;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.75rem;outline:none;cursor:pointer}
+.finance-filter select option{background:var(--card);color:var(--text)}
+
+.txn-list{display:flex;flex-direction:column;gap:2px}
+.txn-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--glass);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.txn-row:hover{border-color:rgba(0,198,255,.15);background:rgba(255,255,255,.04);transform:translateX(2px)}
+.txn-date{font-size:.72rem;color:var(--muted);width:56px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.txn-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.txn-info{flex:1;min-width:0}
+.txn-desc{font-size:.85rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txn-vendor{font-size:.72rem;color:var(--muted)}
+.txn-cat{font-size:.62rem;padding:2px 8px;border-radius:6px;font-weight:500;flex-shrink:0}
+.txn-cat.work{background:rgba(0,198,255,.1);color:var(--cyan)}
+.txn-cat.housing{background:rgba(156,39,176,.12);color:#ce93d8}
+.txn-cat.utilities{background:rgba(255,167,38,.1);color:#ffa726}
+.txn-cat.food{background:rgba(0,230,118,.1);color:var(--green)}
+.txn-cat.freelance{background:rgba(0,198,255,.1);color:var(--cyan)}
+.txn-cat.subscriptions{background:rgba(233,30,99,.1);color:#f48fb1}
+.txn-cat.health{background:rgba(0,188,212,.1);color:#4dd0e1}
+.txn-cat.transportation{background:rgba(121,85,72,.15);color:#bcaaa4}
+.txn-cat.dividends{background:rgba(0,230,118,.1);color:var(--green)}
+.txn-cat.personal{background:rgba(255,193,7,.1);color:#ffd54f}
+.txn-amount{font-size:.9rem;font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0;min-width:80px;text-align:right}
+.txn-amount.income{color:var(--green)}
+.txn-amount.expense{color:#ff5252}
+.txn-receipt-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);flex-shrink:0;box-shadow:0 0 6px var(--glow);opacity:.6}
+
+/* Transaction Detail Modal */
+.txn-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.txn-detail-item{padding:12px;background:var(--glass);border:1px solid var(--border);border-radius:10px}
+.txn-detail-item .label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.txn-detail-item .value{font-size:.88rem;font-weight:500}
+.txn-detail-full{grid-column:1/-1}
+.txn-breakdown{margin-bottom:20px}
+.txn-breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.txn-breakdown-row:last-child{border-bottom:none;font-weight:600}
+.receipt-viewer{margin-top:16px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.receipt-viewer img{width:100%;display:block;cursor:zoom-in}
+.receipt-placeholder{padding:24px;text-align:center;color:var(--muted);font-size:.82rem}
+
+/* Price Tracking */
+.price-track-section{margin-top:24px}
+.price-track-item{padding:14px;margin-bottom:8px}
+.price-track-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.price-track-name{font-size:.88rem;font-weight:600}
+.price-track-badge{font-size:.68rem;padding:2px 8px;border-radius:6px;font-weight:500}
+.price-track-badge.up{background:rgba(255,82,82,.12);color:#ff5252}
+.price-track-badge.down{background:rgba(0,230,118,.12);color:var(--green)}
+.price-track-badge.same{background:rgba(255,255,255,.06);color:var(--muted)}
+.price-history-row{display:flex;justify-content:space-between;font-size:.78rem;padding:6px 0;border-bottom:1px solid var(--border)}
+.price-history-row:last-child{border-bottom:none}
+
+/* Receipt fullscreen */
+.receipt-fullscreen{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;cursor:zoom-out;opacity:0;pointer-events:none;transition:opacity .3s}
+.receipt-fullscreen.open{opacity:1;pointer-events:all}
+.receipt-fullscreen img{max-width:90%;max-height:90%;border-radius:8px}
+
 @media(max-width:600px){
   .header h1{font-size:.95rem}
   .tab-btn{padding:10px 14px;font-size:.8rem}
   .main{padding:14px}
   .agents-grid{grid-template-columns:1fr}
+  .finance-overview{grid-template-columns:1fr}
+  .txn-detail-grid{grid-template-columns:1fr}
+  .finance-filters{gap:6px}
   .overlay-panel{max-width:100%}
   .profile-name{font-size:1.2rem}
   .detail-title{font-size:1.2rem}
@@ -204,6 +283,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
   <!-- Tab Navigation -->
   <nav class="tab-nav">
     <button class="tab-btn active" data-tab="work">Work</button>
+    <button class="tab-btn" data-tab="finance">Finance</button>
     <button class="tab-btn" data-tab="stocks">Stocks</button>
     <button class="tab-btn" data-tab="website">Website</button>
     <button class="tab-btn" data-tab="blog">Blog</button>
@@ -250,6 +330,44 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       </div>
       <div class="section-divider"></div>
       <div class="projects-grid" id="projects-grid" style="margin-top:16px"></div>
+    </div>
+
+    <!-- FINANCE TAB -->
+    <div class="tab-content" id="tab-finance">
+      <!-- Overview -->
+      <div class="section-header">
+        <span class="icon">💰</span>
+        <h2>February 2026 Overview</h2>
+      </div>
+      <div class="section-divider"></div>
+      <div class="finance-overview" id="finance-overview" style="margin-top:16px"></div>
+
+      <!-- Transactions -->
+      <div class="section-header">
+        <span class="icon">📄</span>
+        <h2>Transactions</h2>
+        <span class="section-badge" id="txn-count">—</span>
+      </div>
+      <div class="section-divider"></div>
+      <div class="finance-filters" id="finance-filters" style="margin-top:16px">
+        <button class="finance-filter active" data-filter="all">All</button>
+        <button class="finance-filter" data-filter="income">Income</button>
+        <button class="finance-filter" data-filter="expense">Expense</button>
+        <div class="finance-filter">
+          <select id="filter-category">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+      </div>
+      <div class="txn-list" id="txn-list" style="margin-top:8px"></div>
+
+      <!-- Price Tracking -->
+      <div class="section-header price-track-section">
+        <span class="icon">📊</span>
+        <h2>Price Tracking</h2>
+      </div>
+      <div class="section-divider"></div>
+      <div id="price-tracking" style="margin-top:16px"></div>
     </div>
 
     <!-- OTHER TABS (placeholders) -->
@@ -301,6 +419,11 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     </div>
     <div class="overlay-body" id="overlay-body"></div>
   </div>
+</div>
+
+<!-- Receipt Fullscreen -->
+<div class="receipt-fullscreen" id="receipt-fullscreen" onclick="this.classList.remove('open')">
+  <img src="" alt="Receipt">
 </div>
 
 <script>
@@ -507,6 +630,182 @@ function openProject(id){
   `);
 }
 
+// Finance
+let financeData={transactions:[]},priceTrackingData={trackedItems:[]};
+let financeFilter='all',categoryFilter='';
+
+async function loadFinance(){
+  try{
+    [financeData,priceTrackingData]=await Promise.all([
+      fetch('data/finance.json').then(r=>r.json()),
+      fetch('data/price-tracking.json').then(r=>r.json()).catch(()=>({trackedItems:[]}))
+    ]);
+    renderFinanceOverview();
+    populateCategoryFilter();
+    renderTransactions();
+    renderPriceTracking();
+  }catch(e){console.error('Failed to load finance data',e)}
+}
+
+function renderFinanceOverview(){
+  const txns=financeData.transactions;
+  const income=txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense=txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const balance=income-expense;
+  const maxBar=Math.max(income,expense);
+
+  document.getElementById('finance-overview').innerHTML=`
+    <div class="card finance-stat">
+      <div class="stat-label">Net Balance</div>
+      <div class="stat-value ${balance>=0?'positive':'negative'}">$${Math.abs(balance).toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+      <div class="stat-sub">${balance>=0?'▲ Positive':'▼ Negative'} this month</div>
+    </div>
+    <div class="card finance-stat">
+      <div class="stat-label">Money In</div>
+      <div class="stat-value positive">$${income.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+      <div class="stat-sub">${txns.filter(t=>t.type==='income').length} deposits</div>
+    </div>
+    <div class="card finance-stat">
+      <div class="stat-label">Money Out</div>
+      <div class="stat-value negative">$${expense.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+      <div class="stat-sub">${txns.filter(t=>t.type==='expense').length} transactions</div>
+    </div>
+  `;
+}
+
+function populateCategoryFilter(){
+  const cats=[...new Set(financeData.transactions.map(t=>t.category))].sort();
+  const sel=document.getElementById('filter-category');
+  sel.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${c}">${c.charAt(0).toUpperCase()+c.slice(1)}</option>`).join('');
+  sel.addEventListener('change',()=>{categoryFilter=sel.value;renderTransactions()});
+}
+
+// Filter buttons
+document.querySelectorAll('#finance-filters .finance-filter[data-filter]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#finance-filters .finance-filter[data-filter]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    financeFilter=btn.dataset.filter;
+    renderTransactions();
+  });
+});
+
+const catIcons={work:'💼',housing:'🏠',utilities:'⚡',food:'🛒',freelance:'💻',subscriptions:'📺',health:'🏋️',transportation:'⛽',dividends:'📈',personal:'🎁'};
+
+function renderTransactions(){
+  let txns=[...financeData.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(financeFilter!=='all')txns=txns.filter(t=>t.type===financeFilter);
+  if(categoryFilter)txns=txns.filter(t=>t.category===categoryFilter);
+
+  document.getElementById('txn-count').textContent=txns.length+' shown';
+  document.getElementById('txn-list').innerHTML=txns.map(t=>{
+    const d=new Date(t.date+'T12:00:00');
+    const dateStr=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const sign=t.type==='income'?'+':'−';
+    const hasReceipt=!!t.receipt;
+    return `<div class="txn-row" onclick="openTxnDetail('${t.id}')">
+      <div class="txn-date">${dateStr}</div>
+      <div class="txn-icon" style="background:rgba(255,255,255,.04)">${catIcons[t.category]||'💳'}</div>
+      <div class="txn-info">
+        <div class="txn-desc">${t.description}</div>
+        ${t.vendor?`<div class="txn-vendor">${t.vendor}</div>`:''}
+      </div>
+      <span class="txn-cat ${t.category}">${t.category}</span>
+      ${hasReceipt?'<span class="txn-receipt-dot" title="Has receipt"></span>':''}
+      <div class="txn-amount ${t.type}">${sign}$${t.amount.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+    </div>`;
+  }).join('');
+}
+
+function openTxnDetail(id){
+  const t=financeData.transactions.find(x=>x.id===id);if(!t)return;
+  const d=new Date(t.date+'T12:00:00');
+  const dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const sign=t.type==='income'?'+':'−';
+
+  // Check if price tracked
+  const tracked=priceTrackingData.trackedItems.find(p=>p.item===t.item);
+
+  let html=`
+    <div style="margin-bottom:20px">
+      <div style="font-size:2rem;font-weight:700;${t.type==='income'?'color:var(--green)':'color:#ff5252'}">${sign}$${t.amount.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+      <div style="color:var(--muted);font-size:.85rem;margin-top:4px">${dateStr}</div>
+    </div>
+    <div class="txn-detail-grid">
+      <div class="txn-detail-item txn-detail-full"><div class="label">Description</div><div class="value">${t.description}</div></div>
+      ${t.vendor?`<div class="txn-detail-item"><div class="label">Vendor</div><div class="value">${t.vendor}</div></div>`:''}
+      ${t.vendorAddress?`<div class="txn-detail-item"><div class="label">Address</div><div class="value">${t.vendorAddress}</div></div>`:''}
+      <div class="txn-detail-item"><div class="label">Category</div><div class="value"><span class="txn-cat ${t.category}">${t.category}</span></div></div>
+      <div class="txn-detail-item"><div class="label">Type</div><div class="value">${t.type==='income'?'💚 Income':'🔴 Expense'}</div></div>
+      ${t.card?`<div class="txn-detail-item"><div class="label">Card</div><div class="value">💳 ${t.card}</div></div>`:''}
+    </div>`;
+
+  if(t.itemPrice||t.tax){
+    html+=`<div class="txn-breakdown"><div style="font-size:.82rem;font-weight:600;margin-bottom:8px">Breakdown</div>`;
+    if(t.item)html+=`<div class="txn-breakdown-row"><span>${t.item}</span><span>$${t.itemPrice?.toFixed(2)||'—'}</span></div>`;
+    if(t.tax)html+=`<div class="txn-breakdown-row"><span>Tax</span><span>$${t.tax.toFixed(2)}</span></div>`;
+    html+=`<div class="txn-breakdown-row"><span>Total</span><span>$${t.amount.toFixed(2)}</span></div></div>`;
+  }
+
+  if(tracked){
+    html+=`<div style="padding:12px;background:rgba(0,198,255,.06);border:1px solid rgba(0,198,255,.15);border-radius:10px;margin-bottom:16px">
+      <div style="font-size:.78rem;font-weight:600;color:var(--cyan);margin-bottom:4px">📊 Price Tracked Item</div>
+      <div style="font-size:.75rem;color:var(--muted)">Lowest: $${tracked.lowestPrice.toFixed(2)} at ${tracked.lowestVendor}</div>
+      <div style="font-size:.75rem;color:var(--muted)">${tracked.priceHistory.length} price point(s) recorded</div>
+    </div>`;
+  }
+
+  if(t.receipt){
+    html+=`<div style="font-size:.82rem;font-weight:600;margin-bottom:8px">Receipt</div>
+      <div class="receipt-viewer">
+        <img src="data/${t.receipt}" alt="Receipt" onclick="openReceiptFull(this.src)" onerror="this.parentElement.innerHTML='<div class=\\'receipt-placeholder\\'>📷 Receipt image not found</div>'">
+      </div>`;
+  }
+
+  openOverlay('Transaction Detail',html);
+}
+
+function openReceiptFull(src){
+  const el=document.getElementById('receipt-fullscreen');
+  el.querySelector('img').src=src;
+  el.classList.add('open');
+}
+
+function renderPriceTracking(){
+  const items=priceTrackingData.trackedItems;
+  if(!items.length){
+    document.getElementById('price-tracking').innerHTML='<div style="color:var(--muted);font-size:.82rem">No items being tracked.</div>';
+    return;
+  }
+  document.getElementById('price-tracking').innerHTML=items.map(item=>{
+    const latest=item.priceHistory[item.priceHistory.length-1];
+    const prev=item.priceHistory.length>1?item.priceHistory[item.priceHistory.length-2]:null;
+    let badge='same',badgeText='Baseline';
+    if(prev){
+      if(latest.price>prev.price){badge='up';badgeText='▲ Price Up';}
+      else if(latest.price<prev.price){badge='down';badgeText='▼ Price Down';}
+      else{badgeText='No Change';}
+    }
+    const historyHTML=item.priceHistory.map(h=>{
+      const d=new Date(h.date+'T12:00:00');
+      return `<div class="price-history-row">
+        <span>${d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+        <span>${h.vendor}</span>
+        <span style="font-weight:600">$${h.total.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+    return `<div class="card">
+      <div class="price-track-header">
+        <span class="price-track-name">${item.item}</span>
+        <span class="price-track-badge ${badge}">${badgeText}</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Lowest: $${item.lowestPrice.toFixed(2)} at ${item.lowestVendor}</div>
+      ${historyHTML}
+    </div>`;
+  }).join('');
+}
+
+loadFinance();
 loadData();
 </script>
 </body>
