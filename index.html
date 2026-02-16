@@ -464,6 +464,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     <button class="tab-btn" data-tab="website">Website</button>
     <button class="tab-btn" data-tab="blog">Blog</button>
     <button class="tab-btn" data-tab="socials">Socials</button>
+    <button class="tab-btn" data-tab="youtube">📺 YouTube</button>
     <button class="tab-btn" data-tab="calendar">Calendar</button>
   </nav>
 
@@ -609,6 +610,43 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <h3>Socials</h3>
         <p>Social media command center. Scheduled posts, engagement, analytics.</p>
       </div>
+    </div>
+    <div class="tab-content" id="tab-youtube">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+        <div class="card" style="padding:20px">
+          <h3 style="margin:0 0 12px;color:var(--cyan)">📺 Channels Tracked</h3>
+          <div id="yt-channel-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:rgba(0,198,255,0.08);padding:10px;border-radius:8px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:700" id="yt-total">26</div>
+              <div style="font-size:0.75rem;color:var(--muted)">Total</div>
+            </div>
+            <div style="background:rgba(0,198,255,0.08);padding:10px;border-radius:8px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:700" id="yt-openclaw">11</div>
+              <div style="font-size:0.75rem;color:var(--muted)">OpenClaw</div>
+            </div>
+            <div style="background:rgba(0,198,255,0.08);padding:10px;border-radius:8px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:700" id="yt-ai">10</div>
+              <div style="font-size:0.75rem;color:var(--muted)">AI/Tools</div>
+            </div>
+            <div style="background:rgba(255,107,107,0.08);padding:10px;border-radius:8px;text-align:center">
+              <div style="font-size:1.5rem;font-weight:700;color:#ff6b6b" id="yt-stocks">4</div>
+              <div style="font-size:0.75rem;color:var(--muted)">Stocks</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding:20px">
+          <h3 style="margin:0 0 12px;color:var(--cyan)">🔄 Pipeline Status</h3>
+          <div style="font-size:0.85rem;line-height:1.8">
+            <div>📡 <strong>Scout:</strong> Every 4hrs — web research</div>
+            <div>🎓 <strong>YouTube School:</strong> Hourly — channel monitoring</div>
+            <div>📂 <strong>Penny:</strong> 6AM+6PM — indexes all findings</div>
+            <div>🧠 <strong>Director:</strong> Weekly — deep dives (building)</div>
+            <div style="margin-top:8px;color:var(--muted)">Last analysis: <span id="yt-last-update">Feb 16, 1:30 AM</span></div>
+          </div>
+        </div>
+      </div>
+      <h3 style="color:var(--cyan);margin-bottom:12px">📋 Recent Analyses</h3>
+      <div id="yt-feed" style="display:flex;flex-direction:column;gap:10px"></div>
     </div>
     <div class="tab-content" id="tab-calendar">
       <div class="placeholder">
@@ -1207,6 +1245,29 @@ function renderPriceTracking(){
 
 loadFinance();
 loadData();
+
+// YouTube Feed
+async function loadYouTube(){
+  try{
+    const res=await fetch('data/youtube-feed.json');
+    const data=await res.json();
+    const feed=document.getElementById('yt-feed');
+    if(!feed)return;
+    const catColors={'ai-openclaw':'#00c6ff','ai-general':'#7c3aed','ai-tools':'#10b981','stocks':'#ff6b6b'};
+    const catLabels={'ai-openclaw':'OpenClaw','ai-general':'AI','ai-tools':'Tools','stocks':'Stocks'};
+    feed.innerHTML=data.recentAnalyses.map(v=>`
+      <div class="card" style="padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer" onclick="openOverlay('${v.title.replace(/'/g,"\\'")}','<p><strong>Creator:</strong> ${v.creator}</p><p><strong>Key Insight:</strong> ${v.keyInsight.replace(/'/g,"\\'")}</p><p><strong>File:</strong> ${v.file}</p>')">
+        <span style="background:${catColors[v.category]||'#666'};color:#000;padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;white-space:nowrap">${catLabels[v.category]||v.category}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:0.9rem;margin-bottom:4px">${v.title}</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.4">${v.keyInsight}</div>
+          <div style="font-size:0.7rem;color:var(--muted);margin-top:4px">${v.creator} · ${v.date}</div>
+        </div>
+      </div>
+    `).join('');
+  }catch(e){console.log('YouTube feed not loaded',e)}
+}
+loadYouTube();
 </script>
 </body>
 </html>

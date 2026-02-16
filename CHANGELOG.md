@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.1] - 2026-02-16
+
+### Nightly Self-Improvement Update
+
+**Fixed:**
+- **Cron Jobs Data Accuracy** — Updated `data/cron-jobs.json` with real data from OpenClaw (was showing 7 fake placeholder jobs, now shows all 10 actual jobs)
+- **Error Status Indicators** — Added `consecutiveErrors` and `errorMessage` fields to cron job cards for better visibility
+- **Fake Approvals Removed** — Cleared placeholder approval items, now shows accurate empty state
+- **Blocked Cron Jobs** — Fixed two legacy jobs (youtube-learning, workspace-backup) that were using blocked Codex model by updating to Sonnet
+
+**Technical Notes:**
+- Dashboard data last updated: 2026-02-16 02:00 AM
+- All cron job times, schedules, and error states now reflect live OpenClaw data
+
+---
+
 ## [2.3.0] - 2026-02-15
 
 ### Approvals Queue for Agents

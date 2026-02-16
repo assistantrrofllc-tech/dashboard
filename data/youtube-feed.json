@@ -1,0 +1,75 @@
+{
+  "lastUpdated": "2026-02-16T01:30:00-05:00",
+  "channels": {
+    "ai-openclaw": 11,
+    "ai-general": 9,
+    "ai-tools": 1,
+    "stocks": 4
+  },
+  "recentAnalyses": [
+    {
+      "date": "2026-02-16",
+      "title": "Mission Control: Real-Time Agent Dashboard",
+      "creator": "Mission Control Guy",
+      "category": "ai-openclaw",
+      "keyInsight": "Task board + overnight cron = autonomous work queue. Content drops pattern for agent output.",
+      "file": "memory/youtube-learnings/2026-02-16-video-01.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "Gmail + Web Search + Cron Tutorial",
+      "creator": "Manu AGI tutorials",
+      "category": "ai-openclaw",
+      "keyInsight": "Brave Search API (free tier) + Gmail App Password for IMAP skill. 700+ skills on ClawHub.",
+      "file": "memory/youtube-learnings/2026-02-16-video-02.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "Free API Keys for All AI Models",
+      "creator": "Free API Keys Channel",
+      "category": "ai-tools",
+      "keyInsight": "Google AI Studio: 1M tokens/day FREE. NVIDIA, Groq, GitHub Models, OpenRouter all have free tiers.",
+      "file": "memory/youtube-learnings/2026-02-16-free-api-keys-guide.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "14 Agents Running OpenClaw for Multiple Businesses",
+      "creator": "Jeremiah Owski",
+      "category": "ai-openclaw",
+      "keyInsight": "Selling OpenClaw setup as service with waitlist model. Running 14 agents on Mac Mini 8GB.",
+      "file": "memory/youtube-learnings/2026-02-16-jeremiah-openclaw-14agents.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "OpenClaw for Trading, Gmail, Calendar & Home Lab",
+      "creator": "Say",
+      "category": "ai-openclaw",
+      "keyInsight": "n8n + MCP bridges OpenClaw to broker. Buy/sell/stop-loss from Telegram chat.",
+      "file": "memory/youtube-learnings/2026-02-15-say-clawdbot-trading.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "6 Ways to Make 100K (GLD, SLV, SPY)",
+      "creator": "Coach",
+      "category": "stocks",
+      "keyInsight": "Gap fills as entry points. VWAP as support = ride the wave. Three green soldiers = bullish.",
+      "file": "memory/youtube-learnings/2026-02-16-stocks-100k-gld-slv-spy.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "Bearish Q1 — Put Plays + Option Selling",
+      "creator": "MakeMoneyMatt",
+      "category": "stocks",
+      "keyInsight": "Q1 selloff incoming. Short garbage (CRWV/TSLA). Boring stocks ripping (KO/MCD/T/PFE).",
+      "file": "memory/youtube-learnings/2026-02-16-stocks-matt-market-crash-puts.md"
+    },
+    {
+      "date": "2026-02-16",
+      "title": "Top 4 AI Infrastructure Stocks (All +50% YTD)",
+      "creator": "Charlie",
+      "category": "stocks",
+      "keyInsight": "SNDK +129%, TER, WDC, STX — AI storage + chip testing + robotics. All infrastructure plays.",
+      "file": "memory/youtube-learnings/2026-02-16-stocks-top4-infra-plays.md"
+    }
+  ]
+}
