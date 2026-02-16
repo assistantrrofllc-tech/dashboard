@@ -9,7 +9,9 @@
     {"id":"f7","date":"2026-02-10","type":"expense","amount":45,"category":"health","description":"Gym membership"},
     {"id":"f8","date":"2026-02-10","type":"expense","amount":60,"category":"transportation","description":"Gas"},
     {"id":"f9","date":"2026-02-12","type":"income","amount":125,"category":"dividends","description":"CEF quarterly dividend"},
-    {"id":"f10","date":"2026-02-14","type":"expense","amount":95,"category":"personal","description":"Valentine's dinner"}
+    {"id":"f10","date":"2026-02-14","type":"expense","amount":95,"category":"personal","description":"Valentine's dinner"},
+    {"id":"f11","date":"2026-02-15","type":"expense","amount":67.08,"category":"personal","description":"Sky Mint Smokers 6-pack box","vendor":"Bays Smoke Shop","vendorAddress":"1880 E Palm Ave, Tampa, FL 33605","receipt":"receipts/2026-02-15/bays-smoke-shop-67.08.jpg","card":"Mastercard *1167","itemPrice":62.40,"tax":4.68,"priceTracking":true,"item":"Sky Mint Smokers 6-pack box"},
+    {"id":"f12","date":"2026-02-15","type":"expense","amount":5.64,"category":"household","description":"Dollar Tree - Laundry det, Gain sheets, Gatorade","vendor":"Dollar Tree","vendorAddress":"7725 Palm River Road, Tampa, FL 33619-4205","receipt":"receipts/2026-02-15/dollar-tree-5.64.jpg","payment":"Cash","tax":0.39,"items":[{"name":"Laundry Det Blue Oxy 422","qty":1,"price":1.50},{"name":"Gain Sheet Original 15ct","qty":1,"price":1.50},{"name":"Gatorade Orange 20z","qty":1,"price":2.25}]}
   ],
   "cefPortfolio": [
     {"ticker":"PDI","name":"PIMCO Dynamic Income","shares":50,"avgCost":18.25,"currentPrice":19.10,"divYield":13.2},

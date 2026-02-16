@@ -1,5 +1,58 @@
 # Changelog
 
+## [2.3.0] - 2026-02-15
+
+### Approvals Queue for Agents
+
+**New View: Approvals Tab**
+- Added "Approvals" tab with real-time counter badge in the navigation
+- Shows pending requests from agents (Coder, Writer, Research, etc.)
+- Card-based layout with type-specific icons (email, social, purchase, action)
+- Color-coded priority badges (High/Medium/Low)
+- **High Priority Pulse**: Pulsing red border animation for critical items
+- Collapsible detail view for full context before deciding
+- **Action Buttons**: Big ✅ Approve and ❌ Reject buttons
+- Items move to "Approved" or "Rejected" sections upon action
+- Collapsible history sections for past decisions
+
+**Work Tab Integration:**
+- "Pending Approvals" preview widget added to the top of the Work tab
+- Only visible when there are active items waiting for Kai's review
+- Quick link to jump to the full Approvals tab
+
+**Data:**
+- Created `data/approvals.json` to store pending and historical decisions
+- Support for type, priority, agent attribution, and timestamps
+
+---
+
+## [2.2.0] - 2026-02-15
+
+### URGENT: One-Click Unblockers
+
+**New View: One-Click Unblockers (Default)**
+- Added "🚀 Unblockers" as the default tab when opening the dashboard
+- Large, prominent cards for items waiting on Rob's action
+- High priority items (e.g., API keys) have a pulsing glow animation
+- Each card includes:
+    - Project icon + Name
+    - Priority badge (High/Red, Medium/Yellow)
+    - Days blocked counter (relative to today)
+    - Clear description of what is blocking
+    - **BIG Action Button**: Direct link to the unblock page (opens in new tab)
+    - Step-by-step instructions below the button
+
+**Interaction:**
+- "Done" button on each card moves the item to a "Recently Resolved" section
+- Real-time counter of waiting items in the tab header
+- Mobile-optimized layout for Galaxy S22
+
+**Data Integration:**
+- Consumes `/data/blockers.json`
+- Supports High and Medium priority categorization
+
+---
+
 ## [2.1.0] - 2026-02-15
 
 ### Finance Tab — Banking-Style Transaction View

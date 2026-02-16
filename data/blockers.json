@@ -1,0 +1,52 @@
+{
+  "blockers": [
+    {
+      "id": "b1",
+      "project": "Firecrawl Web Scraping",
+      "status": "blocked",
+      "blocker": "Need API key from firecrawl.dev",
+      "actionLabel": "Get API Key →",
+      "actionUrl": "https://www.firecrawl.dev/app/api-keys",
+      "instructions": "Sign up (free tier, 500 credits), copy the API key (starts with fc-), and send it to Kai via Telegram.",
+      "priority": "high",
+      "icon": "🔥",
+      "dateBlocked": "2026-02-15"
+    },
+    {
+      "id": "b2",
+      "project": "Super Memory",
+      "status": "blocked",
+      "blocker": "Need API key from supermemory.ai",
+      "actionLabel": "Get API Key →",
+      "actionUrl": "https://supermemory.ai",
+      "instructions": "Sign up for SuperMemory, grab your API key from the dashboard, and send it to Kai.",
+      "priority": "high",
+      "icon": "🧠",
+      "dateBlocked": "2026-02-15"
+    },
+    {
+      "id": "b3",
+      "project": "Email Form (Landing Page)",
+      "status": "blocked",
+      "blocker": "FormSubmit needs first-time email confirmation",
+      "actionLabel": "Check Email →",
+      "actionUrl": "https://mail.google.com/mail/u/?authuser=official.techquest.ai@gmail.com",
+      "instructions": "Check official.techquest.ai@gmail.com for a FormSubmit confirmation email. Click the confirm link once. After that all future submissions work automatically.",
+      "priority": "medium",
+      "icon": "📧",
+      "dateBlocked": "2026-02-15"
+    },
+    {
+      "id": "b4",
+      "project": "Printful Merch Store",
+      "status": "blocked",
+      "blocker": "Need Printful account created",
+      "actionLabel": "Create Account →",
+      "actionUrl": "https://www.printful.com/auth/register",
+      "instructions": "Sign up for free Printful account. Once created, Kai will upload logo variants and set up polo products.",
+      "priority": "medium",
+      "icon": "👕",
+      "dateBlocked": "2026-02-15"
+    }
+  ]
+}

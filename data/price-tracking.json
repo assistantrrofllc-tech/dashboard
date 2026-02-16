@@ -1,0 +1,22 @@
+{
+  "trackedItems": [
+    {
+      "item": "Sky Mint Smokers 6-pack box",
+      "category": "personal",
+      "priceHistory": [
+        {
+          "date": "2026-02-15",
+          "price": 62.40,
+          "tax": 4.68,
+          "total": 67.08,
+          "vendor": "Bays Smoke Shop",
+          "address": "1880 E Palm Ave, Tampa, FL 33605",
+          "receipt": "receipts/2026-02-15/bays-smoke-shop-67.08.jpg"
+        }
+      ],
+      "lowestPrice": 62.40,
+      "lowestVendor": "Bays Smoke Shop",
+      "alerts": true
+    }
+  ]
+}

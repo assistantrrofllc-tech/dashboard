@@ -1,0 +1,33 @@
+{
+  "pending": [
+    {
+      "id": "a1",
+      "type": "purchase",
+      "title": "GPU Upgrade for Training",
+      "detail": "Purchase 2x NVIDIA H100s for the local cluster to speed up agent training cycles. Total cost: $60,000.",
+      "priority": "high",
+      "createdAt": "2026-02-15T20:00:00Z",
+      "agent": "Coder"
+    },
+    {
+      "id": "a2",
+      "type": "social",
+      "title": "Post weekly update to X",
+      "detail": "Kai hasn't posted in 3 days. I've drafted a summary of the new dashboard features to share with the community.",
+      "priority": "medium",
+      "createdAt": "2026-02-15T20:15:00Z",
+      "agent": "Writer"
+    },
+    {
+      "id": "a3",
+      "type": "action",
+      "title": "Archive old research logs",
+      "detail": "Move all research logs from 2025 to long-term storage to keep the workspace clean.",
+      "priority": "low",
+      "createdAt": "2026-02-15T20:30:00Z",
+      "agent": "Research"
+    }
+  ],
+  "approved": [],
+  "rejected": []
+}

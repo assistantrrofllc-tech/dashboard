@@ -14,7 +14,38 @@
   --text:#e8e8f0;--muted:#8888a0;--accent:#00e676;
   --glass:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);
   --gradient:linear-gradient(135deg,var(--cyan),var(--green));
+  --red:#ff5252;--glow-red:rgba(255,82,82,0.2);
 }
+.nav-badge{background:var(--red);color:#fff;font-size:.6rem;padding:1px 5px;border-radius:10px;vertical-align:top;margin-left:2px}
+
+/* Approvals */
+.approvals-grid{display:grid;gap:16px}
+.approval-card{display:flex;flex-direction:column;gap:12px;padding:20px}
+.approval-header{display:flex;align-items:center;gap:12px}
+.approval-icon{font-size:1.5rem;width:42px;height:42px;background:rgba(255,255,255,.05);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.approval-info{flex:1}
+.approval-title{font-size:1rem;font-weight:600}
+.approval-meta{font-size:.75rem;color:var(--muted);display:flex;gap:8px}
+.priority-badge{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase}
+.priority-high{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2);animation:pulse-red 2s infinite}
+.priority-medium{background:rgba(255,167,38,.1);color:#ffa726;border:1px solid rgba(255,167,38,.2)}
+.priority-low{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)}
+@keyframes pulse-red{0%{box-shadow:0 0 0 0 rgba(255,82,82,.4)}70%{box-shadow:0 0 0 6px rgba(255,82,82,0)}100%{box-shadow:0 0 0 0 rgba(255,82,82,0)}}
+
+.approval-detail{font-size:.88rem;color:var(--text);line-height:1.5;cursor:pointer}
+.approval-detail.collapsed{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.approval-actions{display:flex;gap:10px}
+.btn-approve,.btn-reject{flex:1;padding:12px;border-radius:10px;border:none;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
+.btn-approve{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.btn-approve:hover{background:var(--green);color:#000;box-shadow:0 0 15px var(--glow-green)}
+.btn-reject{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
+.btn-reject:hover{background:var(--red);color:#fff;box-shadow:0 0 15px var(--glow-red)}
+
+.approval-section-header{margin-top:40px;opacity:.8;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.approval-section-header:hover{opacity:1}
+.approval-section-content.collapsed{display:none}
+
 html{scroll-behavior:smooth}
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;min-height:100vh}
 
@@ -249,6 +280,149 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .receipt-fullscreen.open{opacity:1;pointer-events:all}
 .receipt-fullscreen img{max-width:90%;max-height:90%;border-radius:8px}
 
+/* Unblocker Cards */
+.blocker-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blocker-card.high-priority {
+  border-color: rgba(255, 82, 82, 0.3);
+  box-shadow: 0 0 20px rgba(255, 82, 82, 0.05);
+}
+
+.blocker-card.pulse-glow {
+  animation: pulse-glow 2s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 10px rgba(255, 82, 82, 0.1); border-color: rgba(255, 82, 82, 0.2); }
+  100% { box-shadow: 0 0 25px rgba(255, 82, 82, 0.25); border-color: rgba(255, 82, 82, 0.5); }
+}
+
+.blocker-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.blocker-icon {
+  font-size: 2rem;
+  background: rgba(255,255,255,0.05);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.blocker-project-info {
+  flex: 1;
+}
+
+.blocker-project-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.blocker-priority-badge {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blocker-priority-badge.high {
+  background: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.2);
+}
+
+.blocker-priority-badge.medium {
+  background: rgba(255, 167, 38, 0.15);
+  color: #ffa726;
+  border: 1px solid rgba(255, 167, 38, 0.2);
+}
+
+.blocker-desc {
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 500;
+  background: rgba(255,255,255,0.03);
+  padding: 12px;
+  border-radius: 10px;
+  border-left: 3px solid var(--cyan);
+}
+
+.blocker-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.blocker-action-btn {
+  background: var(--gradient);
+  color: #000;
+  text-decoration: none;
+  text-align: center;
+  padding: 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+}
+
+.blocker-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4);
+}
+
+.blocker-action-btn:active {
+  transform: translateY(0);
+}
+
+.blocker-instructions {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+.blocker-done-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.blocker-done-btn:hover {
+  background: rgba(0, 230, 118, 0.1);
+  color: var(--green);
+  border-color: rgba(0, 230, 118, 0.2);
+}
+
 @media(max-width:600px){
   .header h1{font-size:.95rem}
   .tab-btn{padding:10px 14px;font-size:.8rem}
@@ -282,7 +456,9 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 
   <!-- Tab Navigation -->
   <nav class="tab-nav">
-    <button class="tab-btn active" data-tab="work">Work</button>
+    <button class="tab-btn active" data-tab="unblockers">🚀 Unblockers</button>
+    <button class="tab-btn" data-tab="work">Work</button>
+    <button class="tab-btn" data-tab="approvals">Approvals <span class="nav-badge" id="approvals-badge" style="display:none">0</span></button>
     <button class="tab-btn" data-tab="finance">Finance</button>
     <button class="tab-btn" data-tab="stocks">Stocks</button>
     <button class="tab-btn" data-tab="website">Website</button>
@@ -293,8 +469,43 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 
   <!-- Main Content -->
   <main class="main">
+    <!-- UNBLOCKERS TAB -->
+    <div class="tab-content active" id="tab-unblockers">
+      <div class="section-header">
+        <span class="icon">🚀</span>
+        <h2>One-Click Unblockers</h2>
+        <span class="section-badge" id="blocker-count">—</span>
+      </div>
+      <div class="section-divider"></div>
+      
+      <div id="blockers-list" style="margin-top:20px; display:grid; gap:20px;"></div>
+
+      <div id="resolved-section" style="margin-top:40px; display:none;">
+        <div class="section-header">
+          <span class="icon">✅</span>
+          <h2>Recently Resolved</h2>
+        </div>
+        <div class="section-divider"></div>
+        <div id="resolved-list" style="margin-top:20px; display:grid; gap:12px; opacity:0.7;"></div>
+      </div>
+    </div>
+
     <!-- WORK TAB -->
-    <div class="tab-content active" id="tab-work">
+    <div class="tab-content" id="tab-work">
+      <!-- Approvals Preview Widget -->
+      <div id="approvals-preview" style="margin-bottom:24px; display:none;">
+        <div class="section-header">
+          <span class="icon">🔔</span>
+          <h2>Pending Approvals</h2>
+          <span class="section-badge" id="approvals-count-widget">0</span>
+        </div>
+        <div class="section-divider"></div>
+        <div id="approvals-preview-list" style="margin-top:16px; display:grid; gap:12px;"></div>
+        <div style="margin-top:12px; text-align:center;">
+          <button onclick="document.querySelector('[data-tab=approvals]').click()" style="background:none; border:none; color:var(--cyan); font-family:inherit; font-size:.8rem; cursor:pointer; text-decoration:underline;">View All Approvals</button>
+        </div>
+      </div>
+
       <!-- Cron Jobs -->
       <div class="section-header">
         <span class="icon">⏰</span>
@@ -406,6 +617,29 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <p>Schedule view, upcoming events, and time blocks.</p>
       </div>
     </div>
+
+    <!-- APPROVALS TAB -->
+    <div class="tab-content" id="tab-approvals">
+      <div class="section-header">
+        <span class="icon">✅</span>
+        <h2>Pending Approvals</h2>
+        <span class="section-badge" id="approvals-count-main">0</span>
+      </div>
+      <div class="section-divider"></div>
+      <div id="approvals-pending-list" class="approvals-grid" style="margin-top:20px"></div>
+
+      <div class="approval-section-header" onclick="toggleApprovalSection('approved')">
+        <h2 style="font-size:.9rem;font-weight:600">Approved Items</h2>
+        <span id="approved-arrow">▼</span>
+      </div>
+      <div id="approvals-approved-list" class="approvals-grid approval-section-content collapsed" style="margin-top:16px; opacity:.7"></div>
+
+      <div class="approval-section-header" onclick="toggleApprovalSection('rejected')">
+        <h2 style="font-size:.9rem;font-weight:600">Rejected Items</h2>
+        <span id="rejected-arrow">▼</span>
+      </div>
+      <div id="approvals-rejected-list" class="approvals-grid approval-section-content collapsed" style="margin-top:16px; opacity:.7"></div>
+    </div>
   </main>
 </div>
 
@@ -472,7 +706,173 @@ async function loadData(){
       fetch('data/cron-jobs.json').then(r=>r.json())
     ]);
     renderCron();renderAgents();renderProjects();
+    loadBlockers(); 
+    loadApprovals(); // Added
   }catch(e){console.error('Failed to load data',e)}
+}
+
+// Approvals
+let approvals = { pending: [], approved: [], rejected: [] };
+async function loadApprovals() {
+  try {
+    const res = await fetch('data/approvals.json');
+    approvals = await res.json();
+    renderApprovals();
+  } catch (e) { console.error('Failed to load approvals', e); }
+}
+
+const typeIcons = { email: '✉️', social: '📱', purchase: '💰', action: '⚡' };
+
+function renderApprovals() {
+  const pendingList = document.getElementById('approvals-pending-list');
+  const approvedList = document.getElementById('approvals-approved-list');
+  const rejectedList = document.getElementById('approvals-rejected-list');
+  const widgetList = document.getElementById('approvals-preview-list');
+  const badge = document.getElementById('approvals-badge');
+  
+  // Update counts
+  const pendingCount = approvals.pending.length;
+  document.getElementById('approvals-count-main').textContent = pendingCount + ' waiting';
+  document.getElementById('approvals-count-widget').textContent = pendingCount;
+  badge.textContent = pendingCount;
+  badge.style.display = pendingCount > 0 ? 'inline-block' : 'none';
+  document.getElementById('approvals-preview').style.display = pendingCount > 0 ? 'block' : 'none';
+
+  const renderCard = (item, isPending) => {
+    const date = new Date(item.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    return `
+      <div class="card approval-card">
+        <div class="approval-header">
+          <div class="approval-icon">${typeIcons[item.type] || '❓'}</div>
+          <div class="approval-info">
+            <div class="approval-title">${item.title}</div>
+            <div class="approval-meta">
+              <span>Requested by <b>${item.agent}</b></span>
+              <span>• ${date}</span>
+            </div>
+          </div>
+          <span class="priority-badge priority-${item.priority}">${item.priority}</span>
+        </div>
+        <div class="approval-detail collapsed" onclick="this.classList.toggle('collapsed')">
+          ${item.detail}
+        </div>
+        ${isPending ? `
+          <div class="approval-actions">
+            <button class="btn-approve" onclick="handleApproval('${item.id}', 'approve')">✅ Approve</button>
+            <button class="btn-reject" onclick="handleApproval('${item.id}', 'reject')">❌ Reject</button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  };
+
+  pendingList.innerHTML = approvals.pending.map(item => renderCard(item, true)).join('');
+  approvedList.innerHTML = approvals.approved.map(item => renderCard(item, false)).join('');
+  rejectedList.innerHTML = approvals.rejected.map(item => renderCard(item, false)).join('');
+  
+  // Widget shows top 2 pending
+  widgetList.innerHTML = approvals.pending.slice(0, 2).map(item => renderCard(item, true)).join('');
+}
+
+function handleApproval(id, action) {
+  const index = approvals.pending.findIndex(x => x.id === id);
+  if (index === -1) return;
+  
+  const item = approvals.pending.splice(index, 1)[0];
+  if (action === 'approve') {
+    approvals.approved.unshift(item);
+  } else {
+    approvals.rejected.unshift(item);
+  }
+  
+  renderApprovals();
+  // In a real app, we'd POST to an API here to update the JSON file
+}
+
+function toggleApprovalSection(type) {
+  const content = document.getElementById(`approvals-${type}-list`);
+  const arrow = document.getElementById(`${type}-arrow`);
+  content.classList.toggle('collapsed');
+  arrow.textContent = content.classList.contains('collapsed') ? '▼' : '▲';
+}
+
+// Blockers
+let blockers = [];
+async function loadBlockers() {
+  try {
+    const res = await fetch('data/blockers.json');
+    const data = await res.json();
+    blockers = data.blockers;
+    renderBlockers();
+  } catch (e) { console.error('Failed to load blockers', e); }
+}
+
+function renderBlockers() {
+  const list = document.getElementById('blockers-list');
+  const resolvedList = document.getElementById('resolved-list');
+  const activeBlockers = blockers.filter(b => b.status === 'blocked');
+  const resolvedBlockers = blockers.filter(b => b.status === 'resolved');
+
+  document.getElementById('blocker-count').textContent = activeBlockers.length + ' waiting';
+  
+  // Sort: high priority first
+  const sorted = [...activeBlockers].sort((a, b) => {
+    if (a.priority === 'high' && b.priority !== 'high') return -1;
+    if (a.priority !== 'high' && b.priority === 'high') return 1;
+    return 0;
+  });
+
+  list.innerHTML = sorted.map(b => {
+    const date = new Date(b.dateBlocked);
+    const now = new Date('2026-02-15'); // Using system date for demo consistency
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const dayText = diffDays === 0 ? 'Today' : (diffDays === 1 ? 'Yesterday' : diffDays + ' days ago');
+
+    return `
+      <div class="blocker-card ${b.priority === 'high' ? 'high-priority pulse-glow' : ''}" id="blocker-${b.id}">
+        <div class="blocker-header">
+          <div class="blocker-icon">${b.icon}</div>
+          <div class="blocker-project-info">
+            <div class="blocker-project-name">${b.project}</div>
+            <div class="blocker-meta">
+              <span>⚠️ Blocked ${dayText}</span>
+            </div>
+          </div>
+          <span class="blocker-priority-badge ${b.priority}">${b.priority}</span>
+        </div>
+        <div class="blocker-desc">${b.blocker}</div>
+        <a href="${b.actionUrl}" target="_blank" class="blocker-action-btn">${b.actionLabel}</a>
+        <div class="blocker-instructions">${b.instructions}</div>
+        <button class="blocker-done-btn" onclick="resolveBlocker('${b.id}')">Done · Mark as Resolved</button>
+      </div>
+    `;
+  }).join('');
+
+  if (resolvedBlockers.length > 0) {
+    document.getElementById('resolved-section').style.display = 'block';
+    resolvedList.innerHTML = resolvedBlockers.map(b => `
+      <div class="card" style="padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 1.2rem;">✅</span>
+        <div style="flex: 1;">
+          <div style="font-size: 0.85rem; font-weight: 600;">${b.project}</div>
+          <div style="font-size: 0.75rem; color: var(--muted);">${b.blocker}</div>
+        </div>
+        <span style="font-size: 0.7rem; color: var(--green); font-weight: 600;">RESOLVED</span>
+      </div>
+    `).join('');
+  } else {
+    document.getElementById('resolved-section').style.display = 'none';
+  }
+}
+
+function resolveBlocker(id) {
+  const b = blockers.find(x => x.id === id);
+  if (b) {
+    b.status = 'resolved';
+    renderBlockers();
+    // In a real app, we'd persist this. For Rob's demo, it stays in memory.
+  }
 }
 
 // Cron rendering
