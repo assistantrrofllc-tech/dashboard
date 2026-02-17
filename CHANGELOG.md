@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.4.0] - 2026-02-17
+
+### Nightly Self-Improvement Update
+
+**New Features:**
+- **Error Status Indicators (Live)** — Cron job status dots now reflect real error states:
+  - 🟢 Green: active, no errors
+  - 🔵 Blue + pulsing: currently running
+  - 🟡 Yellow: 1 consecutive error (warning)
+  - 🔴 Red + pulsing: 2+ consecutive errors (critical)
+  - ⚫ Gray: one-time scheduled job
+  - Jobs with errors show a tooltip with error count + message
+  - Running jobs show inline "● RUNNING" badge next to name
+- **Data Last Updated Timestamp** — Cron section now shows "data as of [date/time]" based on most recent lastRun across all jobs. Helps Rob see if data is stale.
+- **Morning Dashboard Brief** — New cron job added: runs every day at 7:30 AM, generates and sends a Telegram morning briefing covering overnight builds, scout highlights, blockers, approvals, and today's schedule.
+
+**Data:**
+- Updated `data/cron-jobs.json` with accurate Feb 17 timestamps for all 13 jobs (added Morning Dashboard Brief)
+- All nextRun times now reflect 2026-02-17 schedule
+
+**Technical Notes:**
+- New agent: `agents/morning-brief/generate-brief.py` — standalone Python script, no dependencies beyond stdlib + json
+- CSS: added `.cron-status.ok`, `.running`, `.warn`, `.error`, `.scheduled` + `pulse-blue` animation
+- JS: `cronHTML()` now reads `consecutiveErrors`, `status`, and `errorMessage` from job data
+
+---
+
 ## [2.3.1] - 2026-02-16
 
 ### Nightly Self-Improvement Update
