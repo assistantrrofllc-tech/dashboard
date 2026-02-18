@@ -834,15 +834,67 @@ async function loadData(){
 
 // Approvals
 let approvals = { pending: [], approved: [], rejected: [] };
+
+const typeIcons = { email: '✉️', social: '📱', purchase: '💰', action: '⚡', research: '🔍', external: '🌐' };
+
 async function loadApprovals() {
   try {
-    const res = await fetch('data/approvals.json');
-    approvals = await res.json();
+    const res = await fetch('data/approvals.json?t=' + Date.now());
+    const fileData = await res.json();
+    // Handle both plain array (legacy) and object format
+    const fileApprovals = Array.isArray(fileData)
+      ? { pending: fileData, approved: [], rejected: [] }
+      : { pending: fileData.pending || [], approved: fileData.approved || [], rejected: fileData.rejected || [] };
+
+    // Merge localStorage decisions (Rob's approve/reject actions persist across reloads)
+    const stored = JSON.parse(localStorage.getItem('approvals_decisions') || '{"approved":[],"rejected":[],"ids":[]}');
+    const decidedIds = new Set(stored.ids || []);
+
+    // Remove items from pending that Rob already decided on
+    fileApprovals.pending = fileApprovals.pending.filter(item => !decidedIds.has(item.id));
+
+    // Merge Rob's local decisions into approved/rejected
+    // (items Rob decided that aren't yet in the file)
+    const fileApprovedIds = new Set(fileApprovals.approved.map(x => x.id));
+    const fileRejectedIds = new Set(fileApprovals.rejected.map(x => x.id));
+    for (const item of stored.approved || []) {
+      if (!fileApprovedIds.has(item.id)) fileApprovals.approved.unshift(item);
+    }
+    for (const item of stored.rejected || []) {
+      if (!fileRejectedIds.has(item.id)) fileApprovals.rejected.unshift(item);
+    }
+
+    approvals = fileApprovals;
     renderApprovals();
   } catch (e) { console.error('Failed to load approvals', e); }
 }
 
-const typeIcons = { email: '✉️', social: '📱', purchase: '💰', action: '⚡' };
+function saveDecisionsToLocalStorage(item, decision) {
+  const stored = JSON.parse(localStorage.getItem('approvals_decisions') || '{"approved":[],"rejected":[],"ids":[]}');
+  stored.ids = stored.ids || [];
+  if (!stored.ids.includes(item.id)) stored.ids.push(item.id);
+  item.decidedAt = new Date().toISOString();
+  item.decidedBy = 'Rob';
+  if (decision === 'approve') {
+    stored.approved = stored.approved || [];
+    stored.approved.unshift(item);
+  } else {
+    stored.rejected = stored.rejected || [];
+    stored.rejected.unshift(item);
+  }
+  localStorage.setItem('approvals_decisions', JSON.stringify(stored));
+}
+
+function showApprovalToast(message, isApprove) {
+  const existing = document.getElementById('approval-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.id = 'approval-toast';
+  toast.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:${isApprove ? 'rgba(0,230,118,.9)' : 'rgba(255,82,82,.9)'};color:${isApprove ? '#000' : '#fff'};padding:12px 24px;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:600;z-index:999;box-shadow:0 4px 24px rgba(0,0,0,.4);pointer-events:none;transition:opacity .4s`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 2800);
+}
 
 function renderApprovals() {
   const pendingList = document.getElementById('approvals-pending-list');
@@ -859,17 +911,26 @@ function renderApprovals() {
   badge.style.display = pendingCount > 0 ? 'inline-block' : 'none';
   document.getElementById('approvals-preview').style.display = pendingCount > 0 ? 'block' : 'none';
 
+  const formatDate = (item) => {
+    const raw = item.requestedISO || item.createdAt || item.requested;
+    if (!raw) return 'Unknown';
+    const d = new Date(raw);
+    if (isNaN(d)) return raw; // Fall back to raw string if it can't be parsed
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  };
+
   const renderCard = (item, isPending) => {
-    const date = new Date(item.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    const decisionLabel = item.decision === 'approve' ? '✅ Approved' : (item.decidedAt ? '❌ Rejected' : '');
     return `
-      <div class="card approval-card">
+      <div class="card approval-card" id="approval-card-${item.id}">
         <div class="approval-header">
           <div class="approval-icon">${typeIcons[item.type] || '❓'}</div>
           <div class="approval-info">
             <div class="approval-title">${item.title}</div>
             <div class="approval-meta">
-              <span>Requested by <b>${item.agent}</b></span>
-              <span>• ${date}</span>
+              <span>By <b>${item.agent || 'Kai'}</b></span>
+              <span>• ${formatDate(item)}</span>
+              ${item.decidedAt ? `<span>• Decided ${new Date(item.decidedAt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span>` : ''}
             </div>
           </div>
           <span class="priority-badge priority-${item.priority}">${item.priority}</span>
@@ -882,12 +943,13 @@ function renderApprovals() {
             <button class="btn-approve" onclick="handleApproval('${item.id}', 'approve')">✅ Approve</button>
             <button class="btn-reject" onclick="handleApproval('${item.id}', 'reject')">❌ Reject</button>
           </div>
-        ` : ''}
+        ` : `<div style="font-size:.75rem;color:var(--muted);margin-top:4px">${decisionLabel}</div>`}
       </div>
     `;
   };
 
-  pendingList.innerHTML = approvals.pending.map(item => renderCard(item, true)).join('');
+  const noItemsHTML = `<div style="text-align:center;padding:40px;color:var(--muted);font-size:.9rem">✅ Nothing pending — you're all caught up</div>`;
+  pendingList.innerHTML = approvals.pending.length ? approvals.pending.map(item => renderCard(item, true)).join('') : noItemsHTML;
   approvedList.innerHTML = approvals.approved.map(item => renderCard(item, false)).join('');
   rejectedList.innerHTML = approvals.rejected.map(item => renderCard(item, false)).join('');
   
@@ -901,13 +963,19 @@ function handleApproval(id, action) {
   
   const item = approvals.pending.splice(index, 1)[0];
   if (action === 'approve') {
+    item.decision = 'approve';
     approvals.approved.unshift(item);
+    showApprovalToast(`✅ Approved: ${item.title}`, true);
   } else {
+    item.decision = 'reject';
     approvals.rejected.unshift(item);
+    showApprovalToast(`❌ Rejected: ${item.title}`, false);
   }
   
+  // Persist decision to localStorage (survives page reload; Kai syncs back to JSON)
+  saveDecisionsToLocalStorage(item, action);
+  
   renderApprovals();
-  // In a real app, we'd POST to an API here to update the JSON file
 }
 
 function toggleApprovalSection(type) {

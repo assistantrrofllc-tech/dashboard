@@ -1,5 +1,17 @@
 {
-  "pending": [],
+  "pending": [
+    {
+      "id": "46A4C67F",
+      "type": "action",
+      "title": "Test approval: update LinkedIn profile",
+      "detail": "This is a test approval item added by the nightly build to verify the approvals system works end-to-end. Safe to approve or reject.",
+      "priority": "low",
+      "agent": "Kai (Nightly Build)",
+      "requested": "Feb 18, 2026 02:03",
+      "requestedISO": "2026-02-18T02:03:33.616985",
+      "status": "pending"
+    }
+  ],
   "approved": [],
   "rejected": []
 }

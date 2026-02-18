@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.5.0] - 2026-02-18
+
+### Nightly Self-Improvement Update
+
+**New Features:**
+- **Approvals Queue — Full Backend** (`agents/approvals/submit-approval.py`)
+  - Kai can now formally submit approval requests that appear in the dashboard
+  - Supports types: email, social, purchase, action, research, external
+  - Priorities: high (pulsing red), medium, low
+  - Optional `--notify` flag sends Rob a Telegram message immediately
+  - `submit`, `list`, `check`, `decide` subcommands for full lifecycle management
+  - Decisions log written to `agents/approvals/decisions-log.json` for Kai to read back
+- **Approval Decisions Now Persist** (localStorage)
+  - Rob's Approve/Reject clicks survive page reloads and tab closures
+  - On reload: localStorage decisions merged with latest `approvals.json` from disk
+  - Items decided by Rob are removed from pending list even if file hasn't synced
+  - New `formatDate()` handles both `requestedISO`, `createdAt`, and `requested` field formats
+- **Approval Decision Toast Notifications**
+  - Green toast for approvals, red toast for rejections with item title
+  - Auto-dismisses after 2.8 seconds with fade-out animation
+- **Approvals Empty State** — Shows "✅ Nothing pending — you're all caught up" instead of blank space
+- **Full type icon set** — Added `research` 🔍 and `external` 🌐 to type icons
+- **Decided items show decision timestamp** — Approved/rejected cards show when the decision was made
+
+**Data:**
+- Synced `data/cron-jobs.json` with live OpenClaw data (15 active jobs, accurate statuses)
+  - 2 errors flagged: `youtube-learning` (timeout, fixed) + `Nightly GitHub Backup` (rate limit)
+  - Live statuses: running, ok, warn, error, scheduled all reflecting real state
+
+**Bug Fixes:**
+- `youtube-learning` cron timeout fixed: 300s → 600s (was timing out daily)
+- `renderCard()` date display fixed: now handles all 3 date field formats in approvals items
+
+**Technical Notes:**
+- `loadApprovals()` now handles both legacy array format and `{pending,approved,rejected}` object format
+- Cache-busting query string on `approvals.json` fetch to avoid stale browser cache
+- `saveDecisionsToLocalStorage()` — new function for decision persistence
+- `showApprovalToast()` — new reusable toast notification system
+
+---
+
 ## [2.4.0] - 2026-02-17
 
 ### Nightly Self-Improvement Update
