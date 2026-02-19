@@ -123,8 +123,8 @@
     "schedule": "30 7 * * *",
     "interval": "Daily at 7:30 AM",
     "description": "Sends Rob a Telegram morning briefing — builds, blockers, approvals, schedule",
-    "lastRun": "2026-02-17T07:30:00-05:00",
-    "nextRun": "2026-02-18T07:30:00-05:00",
+    "lastRun": "2026-02-18T07:30:00-05:00",
+    "nextRun": "2026-02-19T07:30:00-05:00",
     "status": "ok",
     "consecutiveErrors": 0,
     "errorMessage": null
