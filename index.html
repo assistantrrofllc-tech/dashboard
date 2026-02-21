@@ -523,6 +523,14 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <span style="margin-left:auto;font-size:.68rem;color:var(--muted)" id="cron-last-updated"></span>
       </div>
       <div class="section-divider"></div>
+      
+      <!-- Change #4: Manual Sync Now button -->
+      <div style="display:flex;align-items:center;gap:10px;margin:12px 0 16px;padding:10px 14px;background:rgba(0,198,255,.04);border:1px solid var(--border);border-radius:10px">
+        <button onclick="syncCronData(false)" style="background:rgba(0,198,255,.12);color:var(--cyan);border:1px solid rgba(0,198,255,.2);padding:6px 16px;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s">
+          🔄 Sync Now
+        </button>
+        <span id="cron-sync-status" style="font-size:.75rem;color:var(--muted)"></span>
+      </div>
 
       <div style="margin-top:16px">
         <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;font-weight:500">Next 12 Hours</div>
@@ -818,18 +826,83 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
 
 // Data
 let agents=[],projects=[],cronJobs=[];
+let cronDataTimestamp=null;
 
 async function loadData(){
   try{
     [agents,projects,cronJobs]=await Promise.all([
       fetch('data/agents.json').then(r=>r.json()),
       fetch('data/projects.json').then(r=>r.json()),
-      fetch('data/cron-jobs.json').then(r=>r.json())
+      fetch('data/cron-jobs.json?t='+Date.now()).then(r=>r.json())
     ]);
+    
+    // Record when cron data was loaded (Change #1)
+    cronDataTimestamp=Date.now();
+    
     renderCron();renderAgents();renderProjects();
     loadBlockers(); 
     loadApprovals(); // Added
+    
+    // Check if cron data is stale and auto-sync if needed (Change #1)
+    checkAndSyncCronData();
   }catch(e){console.error('Failed to load data',e)}
+}
+
+// Change #1: Auto-sync cron data if >6 hours old
+async function checkAndSyncCronData(){
+  if(!cronJobs.length)return;
+  
+  // Find the most recent lastRun timestamp
+  const lastRunDates=cronJobs.filter(j=>j.lastRun).map(j=>new Date(j.lastRun));
+  if(!lastRunDates.length)return;
+  
+  const newest=new Date(Math.max(...lastRunDates));
+  const ageMs=Date.now()-newest.getTime();
+  const ageHours=ageMs/(1000*60*60);
+  
+  if(ageHours>6){
+    console.log(`Cron data is ${ageHours.toFixed(1)}h old (>6h threshold), auto-syncing...`);
+    await syncCronData(true);
+  }
+}
+
+// Change #4: Manual sync function for "Sync Now" button
+let isSyncingCron=false;
+async function syncCronData(isAuto=false){
+  if(isSyncingCron)return;
+  isSyncingCron=true;
+  
+  const statusEl=document.getElementById('cron-sync-status');
+  if(statusEl){
+    statusEl.textContent=isAuto?'Auto-syncing stale data...':'Syncing...';
+    statusEl.style.color='var(--cyan)';
+  }
+  
+  try{
+    // Call OpenClaw cron:list API to refresh data
+    const res=await fetch('/api/cron/list',{method:'POST'});
+    if(!res.ok)throw new Error('API call failed');
+    
+    // Reload cron data
+    const freshData=await fetch('data/cron-jobs.json?t='+Date.now()).then(r=>r.json());
+    cronJobs=freshData;
+    cronDataTimestamp=Date.now();
+    renderCron();
+    
+    if(statusEl){
+      statusEl.textContent='✓ Synced';
+      statusEl.style.color='var(--green)';
+      setTimeout(()=>{statusEl.textContent='';},3000);
+    }
+  }catch(err){
+    console.error('Cron sync failed:',err);
+    if(statusEl){
+      statusEl.textContent='Sync failed (server offline?)';
+      statusEl.style.color='var(--red)';
+    }
+  }finally{
+    isSyncingCron=false;
+  }
 }
 
 // Approvals

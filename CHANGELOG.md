@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.6.0] - 2026-02-20
+
+### Data Freshness Improvements
+
+**New Features:**
+- **Auto-Sync Stale Cron Data (Change #1)**
+  - Dashboard now automatically checks cron data age on load
+  - If data is >6 hours old, triggers background sync to refresh timestamps
+  - Prevents Rob from seeing outdated "next run" times
+  - Console logs when auto-sync triggers for transparency
+
+- **Manual "Sync Now" Button (Change #4)**
+  - Added manual refresh button in cron tab header
+  - Shows sync status: "Syncing...", "✓ Synced", or error message
+  - Prevents multiple simultaneous syncs
+  - Status message auto-clears after 3 seconds
+
+**Technical:**
+- Added `cronDataTimestamp` tracking to monitor data age
+- New `checkAndSyncCronData()` function runs on page load
+- New `syncCronData(isAuto)` function handles both manual and automatic refreshes
+- Cron data fetches now include cache-busting timestamp parameter
+- Sync button styled to match dashboard theme (cyan, glassmorphic)
+
 ## [2.5.0] - 2026-02-18
 
 ### Nightly Self-Improvement Update
