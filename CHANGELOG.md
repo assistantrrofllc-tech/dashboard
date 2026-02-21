@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.6.1] - 2026-02-21
+
+### Security UX Accuracy Fixes
+
+- Security tab no longer shows stale hardcoded audit state
+- Replaced static `3` security badge with `—`
+- Replaced `3 Issues` with `No data`
+- Replaced `Last audit: Feb 16, 2026` with `Audit not configured`
+- Replaced alert-based "View Full Report" link with disabled "Coming soon" button
+
 ## [2.6.0] - 2026-02-20
 
 ### Data Freshness Improvements
